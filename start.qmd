@@ -54,7 +54,7 @@ editor_options:
 - We'll cover the basics of using R, Rstudio and Quarto
 - More advanced things will be addressed at later sessions
   - requests are welcome
-- I like pragmatic learning, so we'll use 
+- I like pragmatic learning, so we'll use practical examples for most things
 
 ### Expectations and hopes
 
@@ -62,16 +62,44 @@ I hope that you will be fairly comfortable with:
 
 - importing a dataset & doing basic analysis
 - documenting your analysis alongside your code
+  - creating an output document
 - getting something out of the many online articles using R for analysis
 - searching the internet for help
 
-## Overview for today
+### Overview for today
 
 - the basics of using Rstudio
-- things
+- the basics of setting up and using Quarto (in Rstudio)
+- a tiny bit of really basic R functions
+- importing data (and naming variables)
+- data wrangling
+- descriptive analysis & visualization
+- modeling & visualization
 
 ## Keyboard shortcuts
 
+You really really want to do things cleverly from the start.
+
+- **avoid unnecessary typing or use of the mouse**
+
+I have prepared a handout containing the most frequently used strategies.
+
+- We'll walk through them once later on, and then you have the handout as a reference.
+
+### Keyboard shortcuts {.smaller}
+
+- **tab-completion**
+TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.
+- **CTRL+enter**
+Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod (som hålls samman med pipe-symbolen %>% eller |>) eller ggplot (som hålls samman med +) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
+- **CTRL+SHIFT+enter**
+Kör en hel code chunk i Quarto. Spelar ingen roll var i chunken du har markören.
+- **CTRL+SHIFT+m**
+Skapar en pipe-symbol
+- **CTRL+ALT(option)+i**
+Skapar en ny code chunk i Quarto
+- **CTRL/CMD+SHIFT+c**
+Kommentera bort/in alla rader som är markerade
 
 
 ## Setting up
