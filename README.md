@@ -64,9 +64,11 @@ computer. There are two ways to go about this. Either you start up a terminal/sh
 
 ## Additional materials for the curious
 
-If you are new to R, [Hadley Wickham's book "R for data science"](https://r4ds.hadley.nz/) is a great place to start.
+It is not expected that you look at these before we start the course.
 
-For a great collection of materials on *"research design, causal inference, and econometric tools to measure the effects of social programs"*, see <https://evalsp23.classes.andrewheiss.com/>
+[Hadley Wickham's book "R for data science"](https://r4ds.hadley.nz/) is a great place to learn about R, no matter which level of prior knowledge you possess.
+
+For a great collection of helpful materials on *"research design, causal inference, and econometric tools to measure the effects of social programs"*, see <https://evalsp23.classes.andrewheiss.com/>
 
 ## Author
 
