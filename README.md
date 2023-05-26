@@ -37,7 +37,7 @@ library(styler) # only a one-time installation (it is an Rstudio plugin)
 library(car) # for car::recode only
 library(skimr) # data skimming
 
-# these are mostly for data analysis and vizualisation
+# these are mostly for data analysis and visualization
 library(psych)
 library(lme4)
 library(nlme)
