@@ -66,7 +66,7 @@ I hope that you will be fairly comfortable with:
 - getting something out of the many online articles using R for analysis
 - searching the internet for help
 
-### Overview for today
+### Overview for today {background-color="#009ca6"}
 
 - the basics of using Rstudio
 - the basics of setting up and using Quarto (in Rstudio)
@@ -84,11 +84,50 @@ You really really want to do things cleverly from the start.
 
 I have prepared a handout containing the most frequently used strategies.
 
-- We'll walk through them once later on, and then you have the handout as a reference.
+- We'll walk through them later on, and you have the handout as a reference.
+
+## Rstudio layout
+
+- 4 quadrants with tabs in each
+  - code, console, environment & output/help
+- outline & line numbers 
+- Quarto code chunks & chunk output
+- source vs visual
+- moving a code tab to a separate window
+- code editor is helpful and sometimes confusing
+
+## Basics about R
+
+- it is based on `functions()` and objects
+  - functions do things with data
+  - objects store data
+- let's first give basic definitions, then go to practical examples
+
+### Functions
+
+- a function always has `()` tied to it
+- various settings within a function are divided by `,`
+- we can pipe/forward an object or function output to another function
+  - there are two pipes (we'll only use the first one)
+  - %>% (`magrittr` pipe)
+  - |> (`base` pipe)
+
+### Objects {.smaller}
+
+- objects can have many different classes/formats
+- we will mostly work with dataframes
+ - they consist of vectors (rows and columns)
+ - a vector is a string of values
+- each object or column in a dataframe can have a different class
+ - we will primarily work with
+ - character (chr)
+ - factor (fct)
+ - numerical (num, int, or dbl)
 
 ### Keyboard shortcuts {.smaller}
 
-- **tab-completion**
+::: incremental
+- **TAB-completion**
 TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.
 - **CTRL+enter**
 Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod (som hålls samman med pipe-symbolen %>% eller |>) eller ggplot (som hålls samman med +) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
@@ -100,9 +139,9 @@ Skapar en pipe-symbol
 Skapar en ny code chunk i Quarto
 - **CTRL/CMD+SHIFT+c**
 Kommentera bort/in alla rader som är markerade
+:::
 
-
-## Setting up
+## Setting up {background-color="#009ca6"}
 
 Let's load packages/libraries.
 ```{r}
@@ -137,9 +176,10 @@ library(kableExtra)
 library(formattable)
 library(ggrepel)
 
-source("ki.R")
+source("ki.R") # this reads an external file and loads whatever is in it
 ```
 
+### Adaptions {.smaller}
 Some functions exist in multiple packages, which can be a source of headaches and confusion.
 
 Below we define preferred functions that are frequently used. If desired, we can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
@@ -151,7 +191,14 @@ recode <- car::recode
 rename <- dplyr::rename
 ```
 
+
+## Correlation & visualization
+
 rework these for new dataset, first without "styling"
+
+### Correlation matrix
+
+without and with grouping
 ```{r}
 #| eval: false
 df %>% 
@@ -162,7 +209,7 @@ df %>%
 ```
 
 
-#### NMM ~ WHOQoL
+### easystats `plot(cor_test())`
 ```{r}
 #| eval: false
 plot(cor_test(df, "NMM", "WHOQoL_BREF")) +
