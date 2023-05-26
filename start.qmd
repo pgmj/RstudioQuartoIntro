@@ -1,5 +1,5 @@
 ---
-title: "Testing ground"
+title: "Reproducible data analysis with Quarto and R"
 title-block-banner: "#870052"
 title-block-banner-color: "#FFFFFF"
 author: 
@@ -16,7 +16,6 @@ format:
     embed-resources: true
     standalone: true
     page-layout: full
-    logo: images/ki_logo_rgb.png
     mainfont: 'Arial'
     code-overflow: wrap
     code-tools: true
@@ -27,6 +26,15 @@ format:
     layout-align: left
     linestretch: 1.6
     theme: materia
+  revealjs:
+    theme: materia
+    chalkboard: false
+    self-contained: true
+    mainfont: 'Arial'
+    slide-level: 4
+    scrollable: true
+    smaller: false
+    
 execute:
   echo: true
   warning: false
@@ -51,7 +59,7 @@ editor_options:
 
 ## Setting up
 
-First, let's load libraries.
+Let's load packages/libraries.
 ```{r}
 # these are mostly for data management/wrangling and visualization
 library(tidyverse)
@@ -88,7 +96,7 @@ source("ki.R")
 
 Some functions exist in multiple packages, which can be a source of headaches and confusion.
 
-Below we define preferred functions that are frequently used. We can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
+Below we define preferred functions that are frequently used. If desired, we can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
 ```{r}
 ### 
 select <- dplyr::select
@@ -99,6 +107,7 @@ rename <- dplyr::rename
 
 rework these for new dataset, first without "styling"
 ```{r}
+#| eval: false
 df %>% 
   select(starts_with("WHO"),GDS,WHOQoL_BREF,NMM,Gender) %>% 
   ggpairs(aes(color = Gender),alpha = 0.8) +
@@ -109,6 +118,7 @@ df %>%
 
 #### NMM ~ WHOQoL
 ```{r}
+#| eval: false
 plot(cor_test(df, "NMM", "WHOQoL_BREF")) +
   theme_minimal(base_size = 15, 
                 base_family = "Lato") +
