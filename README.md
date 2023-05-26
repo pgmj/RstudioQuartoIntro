@@ -2,7 +2,7 @@
 
 ## Preparations
 
-Install R (version 4.2 or 4.3) for your platform: 
+Install R (you need version 4.1 or later) for your platform: 
 
 - Windows: <https://ftp.acc.umu.se/mirror/CRAN/bin/windows/base/R-4.3.0-win.exe> 
 - Mac: <https://ftp.acc.umu.se/mirror/CRAN/bin/macosx/> 
@@ -11,6 +11,9 @@ Install R (version 4.2 or 4.3) for your platform:
 Install the latest version of Rstudio, which should include Quarto 1.2: - <https://posit.co/download/rstudio-desktop/>
 
 Then check that you have Quarto properly installed by opening a terminal/shell/command prompt and typing: `quarto --version` and pressing enter. This should result in a version number being shown, most likely `1.2.475`.
+
+> **Note:** If you have an older version of R (not Rstudio) and need to upgrade, you may find that the easiest way is to uninstall R and reinstall >everything including packages from scratch. Unfortunately, it is not sufficient to use the regular uninstall functions, but you will find instructions on >removal here: https://www.delftstack.com/howto/r/uninstall-r-and-all-its-packages-on-windows/
+
 
 ### Rstudio settings
 
@@ -24,7 +27,7 @@ If you like, you can change the visual theme under the `Appearance` tab.
 
 Below is a list of all the packages planned for use during the course. In Rstudio, in the bottom right quadrant (under the tab "Files"), create a "New Blank File" of type "R script". Then copy & paste the code below into the new file. Rstudio should then automatically ask if you want to install the packages that are not already installed.
 
-``` r
+```
 # these are mostly for data management/wrangling and visualization
 library(tidyverse) # for most things
 library(foreign) # for reading SPSS files
