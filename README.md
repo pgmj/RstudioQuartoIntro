@@ -2,7 +2,11 @@
 
 ## Preparations
 
-Install R (version 4.2 or 4.3) for your platform: - Windows: <https://ftp.acc.umu.se/mirror/CRAN/bin/windows/base/R-4.3.0-win.exe> - Mac: <https://ftp.acc.umu.se/mirror/CRAN/bin/macosx/> - Others, see: <https://ftp.acc.umu.se/mirror/CRAN/>
+Install R (version 4.2 or 4.3) for your platform: 
+
+- Windows: <https://ftp.acc.umu.se/mirror/CRAN/bin/windows/base/R-4.3.0-win.exe> 
+- Mac: <https://ftp.acc.umu.se/mirror/CRAN/bin/macosx/> 
+- Others, see: <https://ftp.acc.umu.se/mirror/CRAN/>
 
 Install the latest version of Rstudio, which should include Quarto 1.2: - <https://posit.co/download/rstudio-desktop/>
 
