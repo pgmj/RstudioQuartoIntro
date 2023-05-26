@@ -22,7 +22,7 @@ If you like, you can change the visual theme under the `Appearance` tab.
 
 ### Installing R packages
 
-Below is a list of all the packages planned for use during the course. In Rstudio, in the bottom right quadrant (under the tab "Files"), create a "New Blank File" of type "R script". Then copy & paste the rows below that start with `library` into the new file. Rstudio should then automatically ask if you want to install the packages that are not already installed.
+Below is a list of all the packages planned for use during the course. In Rstudio, in the bottom right quadrant (under the tab "Files"), create a "New Blank File" of type "R script". Then copy & paste the code below into the new file. Rstudio should then automatically ask if you want to install the packages that are not already installed.
 
 ``` r
 # these are mostly for data management/wrangling and visualization
@@ -60,7 +60,7 @@ library(ggrepel)
 First, you need to install Git. Download links: <https://git-scm.com/downloads>
 
 Then you are going to "clone" this code repository to a folder on your
-computer. There are two ways to go about this. Either you start up a terminal/shell/command prompt and navigate to where you would like to put the folder (a subfolder will automatically be created) and run the command `git clone adress_to_repo` (update later), or you use a [graphical user interface for git](https://git-scm.com/downloads/guis).
+computer. There are two ways to go about this. Either you start up a terminal/shell/command prompt and navigate to where you would like to put the folder (a subfolder will automatically be created) and run the command `git clone git@github.com:pgmj/RstudioQuartoIntro.git`, or you can use a [graphical user interface for git](https://git-scm.com/downloads/guis). I have no experience with the GUI, so you will have to figure that out for yourself.
 
 ## Additional materials for the curious
 
