@@ -1,0 +1,8 @@
+.quarto-title-block .quarto-title-banner {
+  background-image: url(images/ki_logo_neg.png);
+  background-size: 300px;
+  background-position: right;
+  background-repeat: no-repeat;
+  padding-left: 10px;
+  background-origin: content-box;
+}

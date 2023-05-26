@@ -1,0 +1,123 @@
+---
+title: "Testing ground"
+title-block-banner: "#870052"
+title-block-banner-color: "#FFFFFF"
+author: 
+  name: Magnus Johansson
+  affiliation: RISE Research Institutes of Sweden
+  affiliation-url: https://ri.se/shic
+  orcid: 0000-0003-1669-592X
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Table of contents"
+    embed-resources: true
+    standalone: true
+    page-layout: full
+    logo: images/ki_logo_rgb.png
+    mainfont: 'Arial'
+    code-overflow: wrap
+    code-tools: true
+    code-fold: show
+    code-link: true
+    number-sections: true
+    fig-dpi: 96
+    layout-align: left
+    linestretch: 1.6
+    theme: materia
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+css: styles.css
+editor_options: 
+  chunk_output_type: console
+---
+
+## What is this course and what is it not
+
+### Expectations and hopes
+
+
+
+## Overview
+
+## Keyboard shortcuts
+
+
+
+## Setting up
+
+First, let's load libraries.
+```{r}
+# these are mostly for data management/wrangling and visualization
+library(tidyverse)
+library(foreign)
+library(readxl)
+library(showtext)
+library(stringr)
+library(glue)
+library(arrow)
+library(car)
+library(grateful)
+library(styler)
+library(car)
+library(patchwork)
+library(broom.mixed)
+library(skimr)
+
+# these are mostly for data analysis and vizualisation
+library(psych)
+library(lme4)
+library(nlme)
+library(easystats)
+library(GGally)
+library(mice)
+library(modelsummary)
+library(ggside)
+library(ggdist)
+library(kableExtra)
+library(formattable)
+library(ggrepel)
+
+source("ki.R")
+```
+
+Some functions exist in multiple packages, which can be a source of headaches and confusion.
+
+Below we define preferred functions that are frequently used. We can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
+```{r}
+### 
+select <- dplyr::select
+count <- dplyr::count
+recode <- car::recode
+rename <- dplyr::rename
+```
+
+rework these for new dataset, first without "styling"
+```{r}
+df %>% 
+  select(starts_with("WHO"),GDS,WHOQoL_BREF,NMM,Gender) %>% 
+  ggpairs(aes(color = Gender),alpha = 0.8) +
+  scale_color_manual(values = RISEpalette1,
+                     aesthetics = c("color", "fill"))
+```
+
+
+#### NMM ~ WHOQoL
+```{r}
+plot(cor_test(df, "NMM", "WHOQoL_BREF")) +
+  theme_minimal(base_size = 15, 
+                base_family = "Lato") +
+  theme_rise(fontfamily = "Lato", 
+             axissize = 15) +
+  geom_point(data = df, 
+             aes(NMM, WHOQoL_BREF), 
+             size = 2) +
+    ylab("WHOQoL-BREF") +
+    xlab("NMM")
+```
+
