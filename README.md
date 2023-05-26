@@ -39,6 +39,7 @@ library(grateful) # create table+references for packages used in a project
 library(styler) # only a one-time installation (it is an Rstudio plugin)
 library(car) # for car::recode only
 library(skimr) # data skimming
+library(lubridate) # for handling dates in data
 
 # these are mostly for data analysis and visualization
 library(psych)

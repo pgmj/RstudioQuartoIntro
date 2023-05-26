@@ -2,6 +2,8 @@
 title: "Reproducible data analysis with Quarto and R"
 title-block-banner: "#870052"
 title-block-banner-color: "#FFFFFF"
+title-slide-attributes: 
+  data-background-color: "#009ca6"
 author: 
   name: Magnus Johansson
   affiliation: RISE Research Institutes of Sweden
@@ -27,13 +29,14 @@ format:
     linestretch: 1.6
     theme: materia
   revealjs:
-    theme: materia
+    theme: default
     chalkboard: false
     self-contained: true
     mainfont: 'Arial'
     slide-level: 4
     scrollable: true
     smaller: false
+    center: false
     
 execute:
   echo: true
@@ -45,13 +48,27 @@ editor_options:
   chunk_output_type: console
 ---
 
-## What is this course and what is it not
+## What is this course (and what is it not)
+
+- It is not a statistics course
+- We'll cover the basics of using R, Rstudio and Quarto
+- More advanced things will be addressed at later sessions
+  - requests are welcome
+- I like pragmatic learning, so we'll use 
 
 ### Expectations and hopes
 
+I hope that you will be fairly comfortable with:
 
+- importing a dataset & doing basic analysis
+- documenting your analysis alongside your code
+- getting something out of the many online articles using R for analysis
+- searching the internet for help
 
-## Overview
+## Overview for today
+
+- the basics of using Rstudio
+- things
 
 ## Keyboard shortcuts
 
@@ -61,6 +78,7 @@ editor_options:
 
 Let's load packages/libraries.
 ```{r}
+#| eval: false
 # these are mostly for data management/wrangling and visualization
 library(tidyverse)
 library(foreign)
