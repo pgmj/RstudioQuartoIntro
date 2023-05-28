@@ -6,11 +6,11 @@ title-slide-attributes:
   data-background-iframe: "multiple-images/index.html"
   data-block-banner-color: "white"
 author: 
-  name: Magnus Johansson
+  name: Magnus Johansson, PhD
   affiliation: RISE Research Institutes of Sweden
   affiliation-url: https://ri.se/shic
   orcid: 0000-0003-1669-592X
-date: last-modified
+date: 2023-06-12
 date-format: YYYY-MM-DD
 format: 
   html:
@@ -107,9 +107,9 @@ I have prepared a handout containing the most frequently used shortcuts
 -   Documentation in the same file as analysis code
 :::
 
-### Levels of reproducibility
+### Levels of reproducibility {.smaller}
 
-![](images/levelsOfReproducibility.JPG){fig-align="center"}
+![Meme credit: https://bookdown.org/pdr_higgins/rmrwr/introduction-to-reproducibility.html#cleaning-and-analyzing-your-data](images/levelsOfReproducibility.JPG){fig-align="center"}
 
 ## Rstudio layout 
 
@@ -128,8 +128,8 @@ I have prepared a handout containing the most frequently used shortcuts
 
 -   it is based on `functions()` and objects
     -   functions do things with data
-    -   objects store data
--   let's first give basic definitions, then go to practical examples
+    -   objects store data and output from functions
+-   let's first skim basic definitions, then go to practical examples
 
 ### Functions
 
@@ -157,7 +157,7 @@ I have prepared a handout containing the most frequently used shortcuts
 
 ::: incremental
 -   **TAB-completion** TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.
--   **CTRL+enter** Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod (som hålls samman med pipe-symbolen %\>% eller \|\>) eller ggplot (som hålls samman med +) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
+-   **CTRL+enter** Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod som hålls samman med pipe-symbolen `%\>%` som radbrytning, eller ggplot-kod (som hålls samman med `+`) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
 -   **CTRL+SHIFT+enter** Kör en hel code chunk i Quarto. Spelar ingen roll var i chunken du har markören.
 -   **CTRL+SHIFT+m** Skapar en pipe-symbol
 -   **CTRL+ALT(option)+i** Skapar en ny code chunk i Quarto
