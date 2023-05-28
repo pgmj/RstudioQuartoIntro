@@ -2,14 +2,16 @@
 title: "Reproducible data analysis with Quarto and R"
 title-block-banner: "#870052"
 title-block-banner-color: "#FFFFFF"
-title-slide-attributes: 
-  data-background-color: "#009ca6"
+title-slide-attributes:
+  data-background-iframe: "multiple-images/index.html"
+  data-block-banner-color: "white"
 author: 
   name: Magnus Johansson
   affiliation: RISE Research Institutes of Sweden
   affiliation-url: https://ri.se/shic
   orcid: 0000-0003-1669-592X
 date: last-modified
+date-format: YYYY-MM-DD
 format: 
   html:
     toc: true
@@ -29,14 +31,14 @@ format:
     linestretch: 1.6
     theme: materia
   revealjs:
-    theme: default
-    chalkboard: false
-    self-contained: true
-    mainfont: 'Arial'
+    theme: [night, custom.scss]
+    chalkboard: true
+    self-contained: false
     slide-level: 4
     scrollable: true
     smaller: false
     center: false
+    preload-iframes: true
     
 execute:
   echo: true
@@ -50,100 +52,122 @@ editor_options:
 
 ## What is this course (and what is it not)
 
-- It is not a statistics course
-- We'll cover the basics of using R, Rstudio and Quarto
-- More advanced things will be addressed at later sessions
-  - requests are welcome
-- I like pragmatic learning, so we'll use practical examples for most things
+-   It is not a statistics course
+-   We'll cover the basics of using R, Rstudio and Quarto
+-   More advanced things will be addressed at later sessions
+    -   requests are welcome
+-   I like pragmatic learning, so we'll use practical examples for most things
 
 ### Expectations and hopes
 
 I hope that you will be fairly comfortable with:
 
-- importing a dataset & doing basic analysis
-- documenting your analysis alongside your code
-  - creating an output document
-- getting something out of the many online articles using R for analysis
-- searching the internet for help
+-   importing a dataset & doing basic analysis
+-   documenting your analysis alongside your code
+    -   creating an output document
+-   getting something out of the many online articles using R for analysis
+-   searching the internet for help
 
-### Overview for today {background-color="#009ca6"}
+### Overview for today {background-color="#99D9DD"}
 
-- the basics of using Rstudio
-- the basics of setting up and using Quarto (in Rstudio)
-- a tiny bit of really basic R functions
-- importing data (and naming variables)
-- data wrangling
-- descriptive analysis & visualization
-- modeling & visualization
+-   the basics of using Rstudio
+-   the basics of setting up and using Quarto (in Rstudio)
+-   a tiny bit of really basic R functions
+-   importing data (and naming variables)
+-   data wrangling
+-   descriptive analysis & visualization
+-   modeling & visualization
 
 ## Keyboard shortcuts
 
 You really really want to do things cleverly from the start.
 
-- **avoid unnecessary typing or use of the mouse**
+-   **avoid unnecessary typing or use of the mouse**
 
 I have prepared a handout containing the most frequently used strategies.
 
-- We'll walk through them later on, and you have the handout as a reference.
+-   We'll walk through them later on, and you have the handout as a reference.
 
-## Rstudio layout
+## Fundamentals of reproducibility
 
-- 4 quadrants with tabs in each
-  - code, console, environment & output/help
-- outline & line numbers 
-- Quarto code chunks & chunk output
-- source vs visual
-- moving a code tab to a separate window
-- code editor is helpful and sometimes confusing
+-   **never touch your datafile manually!!!**
+    -   anything you do with your data needs to be documented and traceable
+-   Don't erase code/things you try (only erase faulty code)
+    -   you will want to retrace your steps at some point
+    -   or cue someone else in on what you have been up to so far
+    -   **You can copy&paste later if you need to clean up for publication/sharing**
+
+### Good things
+
+::: incremental
+-   Traceability
+    -   Transparency in decision making during analysis
+-   Reproducibility
+-   Freely available tools
+-   Documentation in the same file as analysis code
+:::
+
+### Levels of reproducibility
+
+![](images/levelsOfReproducibility.JPG){fig-align="center"}
+
+## Rstudio layout {.smaller}
+
+::: incremental
+-   4 quadrants with tabs in each
+    -   code, console, environment & output/help
+-   Projects!
+-   outline & line numbers
+-   Quarto code chunks & chunk output
+-   source vs visual
+-   moving a code tab to a separate window
+-   code editor is helpful and sometimes confusing
+:::
 
 ## Basics about R
 
-- it is based on `functions()` and objects
-  - functions do things with data
-  - objects store data
-- let's first give basic definitions, then go to practical examples
+-   it is based on `functions()` and objects
+    -   functions do things with data
+    -   objects store data
+-   let's first give basic definitions, then go to practical examples
 
 ### Functions
 
-- a function always has `()` tied to it
-- various settings within a function are divided by `,`
-- we can pipe/forward an object or function output to another function
-  - there are two pipes (we'll only use the first one)
-  - %>% (`magrittr` pipe)
-  - |> (`base` pipe)
+-   a function always has `()` tied to it
+-   various settings within a function are divided by `,`
+-   we can pipe/forward an object or function output to another function
+    -   there are two pipes (we'll only use the first one)
+    -   %\>% (`magrittr` pipe)
+    -   \|\> (`base` pipe)
 
 ### Objects {.smaller}
 
-- objects can have many different classes/formats
-- we will mostly work with dataframes
- - they consist of vectors (rows and columns)
- - a vector is a string of values
-- each object or column in a dataframe can have a different class
- - we will primarily work with
- - character (chr)
- - factor (fct)
- - numerical (num, int, or dbl)
+-   objects can have many different classes/formats
+-   we will mostly work with dataframes (sometimes tibbles)
+    -   similar to what you see in a spreadsheet file (Excel)
+    -   they consist of vectors (rows and columns)
+    -   a vector is a string of values
+-   each object or column in a dataframe can have a different class
+    -   we will primarily work with
+    -   character (chr)
+    -   factor (fct)
+    -   numerical (num, int, or dbl)
 
 ### Keyboard shortcuts {.smaller}
 
 ::: incremental
-- **TAB-completion**
-TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.
-- **CTRL+enter**
-Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod (som hålls samman med pipe-symbolen %>% eller |>) eller ggplot (som hålls samman med +) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
-- **CTRL+SHIFT+enter**
-Kör en hel code chunk i Quarto. Spelar ingen roll var i chunken du har markören.
-- **CTRL+SHIFT+m**
-Skapar en pipe-symbol
-- **CTRL+ALT(option)+i**
-Skapar en ny code chunk i Quarto
-- **CTRL/CMD+SHIFT+c**
-Kommentera bort/in alla rader som är markerade
+-   **TAB-completion** TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.
+-   **CTRL+enter** Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod (som hålls samman med pipe-symbolen %\>% eller \|\>) eller ggplot (som hålls samman med +) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
+-   **CTRL+SHIFT+enter** Kör en hel code chunk i Quarto. Spelar ingen roll var i chunken du har markören.
+-   **CTRL+SHIFT+m** Skapar en pipe-symbol
+-   **CTRL+ALT(option)+i** Skapar en ny code chunk i Quarto
+-   **CTRL/CMD+SHIFT+c** Kommentera bort/in alla rader som är markerade
 :::
 
-## Setting up {background-color="#009ca6"}
+## Setting up {background-color="#99D9DD"}
 
 Let's load packages/libraries.
+
 ```{r}
 #| eval: false
 # these are mostly for data management/wrangling and visualization
@@ -180,9 +204,11 @@ source("ki.R") # this reads an external file and loads whatever is in it
 ```
 
 ### Adaptions {.smaller}
+
 Some functions exist in multiple packages, which can be a source of headaches and confusion.
 
 Below we define preferred functions that are frequently used. If desired, we can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
+
 ```{r}
 ### 
 select <- dplyr::select
@@ -191,7 +217,6 @@ recode <- car::recode
 rename <- dplyr::rename
 ```
 
-
 ## Correlation & visualization
 
 rework these for new dataset, first without "styling"
@@ -199,6 +224,7 @@ rework these for new dataset, first without "styling"
 ### Correlation matrix
 
 without and with grouping
+
 ```{r}
 #| eval: false
 df %>% 
@@ -208,8 +234,8 @@ df %>%
                      aesthetics = c("color", "fill"))
 ```
 
-
 ### easystats `plot(cor_test())`
+
 ```{r}
 #| eval: false
 plot(cor_test(df, "NMM", "WHOQoL_BREF")) +
@@ -223,4 +249,3 @@ plot(cor_test(df, "NMM", "WHOQoL_BREF")) +
     ylab("WHOQoL-BREF") +
     xlab("NMM")
 ```
-
