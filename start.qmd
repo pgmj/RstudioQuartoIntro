@@ -50,7 +50,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-## What is this course (and what is it not)
+## Ambitions with this course
 
 -   It is not a statistics course
 -   We'll cover the basics of using R, Rstudio and Quarto
@@ -68,7 +68,7 @@ I hope that you will be fairly comfortable with:
 -   getting something out of the many online articles using R for analysis
 -   searching the internet for help
 
-### Overview for today {background-color="#99D9DD"}
+## Overview for today {background-color="#99D9DD"}
 
 -   the basics of using Rstudio
 -   the basics of setting up and using Quarto (in Rstudio)
@@ -80,13 +80,13 @@ I hope that you will be fairly comfortable with:
 
 ## Keyboard shortcuts
 
-You really really want to do things cleverly from the start.
+You will benefit greatly from doing things cleverly and establishing good habits from the start
 
--   **avoid unnecessary typing or use of the mouse**
+-   **avoid unnecessary typing and using the mouse/trackpad**
 
-I have prepared a handout containing the most frequently used strategies.
+I have prepared a handout containing the most frequently used shortcuts
 
--   We'll walk through them later on, and you have the handout as a reference.
+-   We'll walk through them later on, and you have the handout as a reference
 
 ## Fundamentals of reproducibility
 
@@ -111,7 +111,7 @@ I have prepared a handout containing the most frequently used strategies.
 
 ![](images/levelsOfReproducibility.JPG){fig-align="center"}
 
-## Rstudio layout {.smaller}
+## Rstudio layout 
 
 ::: incremental
 -   4 quadrants with tabs in each
@@ -137,8 +137,8 @@ I have prepared a handout containing the most frequently used strategies.
 -   various settings within a function are divided by `,`
 -   we can pipe/forward an object or function output to another function
     -   there are two pipes (we'll only use the first one)
-    -   %\>% (`magrittr` pipe)
-    -   \|\> (`base` pipe)
+    -   `%\>%` - the `magrittr`
+    -   `|>` - the `base` pipe
 
 ### Objects {.smaller}
 
@@ -164,7 +164,7 @@ I have prepared a handout containing the most frequently used strategies.
 -   **CTRL/CMD+SHIFT+c** Kommentera bort/in alla rader som är markerade
 :::
 
-## Setting up {background-color="#99D9DD"}
+## Setting up for data analysis {background-color="#99D9DD"}
 
 Let's load packages/libraries.
 
