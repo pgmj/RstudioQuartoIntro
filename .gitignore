@@ -3,10 +3,7 @@
 .RData
 .Ruserdata
 .DS_Store
-*.html
-**/*_files/
 **/*_cache/
-**/*_files/**
 **/*_cache/**
 /.quarto/
 !docs/**
