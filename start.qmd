@@ -1,5 +1,5 @@
 ---
-title: "Reproducible data analysis with Quarto and R"
+title: "Reproducible data analysis with R and Quarto"
 title-block-banner: "#870052"
 title-block-banner-color: "#FFFFFF"
 title-slide-attributes:
@@ -45,7 +45,7 @@ execute:
   warning: false
   message: false
   cache: false
-css: styles.css
+css: style.css
 editor_options: 
   chunk_output_type: console
 ---
