@@ -37,6 +37,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+## Data cleaning
+
+![Image credit: https://kbroman.org/Talk_DataCleaning/data_cleaning.pdf](images/RulesDataCleaning.jpg){fig-align="center"}
+
 ## Setting up for data analysis {background-color="#99D9DD"}
 
 Let's load packages/libraries.

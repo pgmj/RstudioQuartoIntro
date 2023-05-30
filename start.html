@@ -537,7 +537,7 @@ Magnus Johansson, PhD <a href="https://orcid.org/0000-0003-1669-592X" class="qua
 <li>we can pipe/forward an object or function output to another function
 <ul>
 <li>there are two pipes (we’ll only use the first one)</li>
-<li><code>%\&gt;%</code> - the <code>magrittr</code></li>
+<li><code>%\&gt;%</code> - the <code>magrittr</code> pipe (<em>shift+ctrl+m</em>)</li>
 <li><code>|&gt;</code> - the <code>base</code> pipe</li>
 </ul></li>
 </ul>
@@ -547,7 +547,7 @@ Magnus Johansson, PhD <a href="https://orcid.org/0000-0003-1669-592X" class="qua
 <h3>Function syntax</h3>
 <ul>
 <li>comma separates input within the parantheses</li>
-<li>the Help tab in lower right quadrant (or <code>?function</code> in console)</li>
+<li>use the Help tab in lower right quadrant (or <code>?function</code> in console)</li>
 </ul>
 </section>
 
@@ -571,42 +571,31 @@ Magnus Johansson, PhD <a href="https://orcid.org/0000-0003-1669-592X" class="qua
 </ul>
 </section>
 
-<section id="object-examples" class="title-slide slide level3 center">
-<h3>Object examples</h3>
+<section id="simple-object-examples" class="title-slide slide level3 center">
+<h3>Simple object examples</h3>
+<p>Single values</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>number <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>number <span class="ot">&lt;-</span> <span class="st">"1"</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a>number <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>number <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"one"</span>,<span class="st">"two"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-
-<section id="object---function" class="title-slide slide level3 center">
-<h3>object &lt;- function()</h3>
-<ul>
-<li>examples with and without pipes</li>
-</ul>
+<span id="cb1-2"><a href="#cb1-2"></a>number <span class="ot">&lt;-</span> <span class="st">"1"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Multiple values (a vector)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>number <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>number <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"one"</span>,<span class="st">"two"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A dataframe is a collection of rows/participants (vectors) and columns/variables (also vectors).</p>
 </section>
 
 <section id="keyboard-shortcuts-1" class="title-slide slide level3 smaller center">
 <h3>Keyboard shortcuts</h3>
-<div>
 <ul>
-<li class="fragment"><strong>TAB-completion</strong> TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.</li>
-<li class="fragment"><strong>CTRL+enter</strong> Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod som hålls samman med pipe-symbolen <code>%\&gt;%</code> som radbrytning, eller ggplot-kod (som hålls samman med <code>+</code>) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå</li>
-<li class="fragment"><strong>CTRL+SHIFT+enter</strong> Kör en hel code chunk i Quarto. Spelar ingen roll var i chunken du har markören.</li>
-<li class="fragment"><strong>CTRL+SHIFT+m</strong> Skapar en pipe-symbol</li>
-<li class="fragment"><strong>CTRL+ALT(option)+i</strong> Skapar en ny code chunk i Quarto</li>
-<li class="fragment"><strong>CTRL/CMD+SHIFT+c</strong> Kommentera bort/in alla rader som är markerade</li>
+<li><strong>TAB-completion</strong> TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.</li>
+<li><strong>CTRL+enter</strong> Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod som hålls samman med pipe-symbolen <code>%\&gt;%</code> som radbrytning, eller ggplot-kod (som hålls samman med <code>+</code>) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå</li>
+<li><strong>CTRL+SHIFT+enter</strong> Kör en hel code chunk i Quarto. Spelar ingen roll var i chunken du har markören.</li>
+<li><strong>CTRL+SHIFT+m</strong> Skapar en pipe-symbol</li>
+<li><strong>CTRL+ALT(option)+i</strong> Skapar en ny code chunk i Quarto</li>
+<li><strong>CTRL/CMD+SHIFT+c</strong> Kommentera bort/in alla rader som är markerade</li>
 </ul>
-</div>
-</section>
-</section>
-<section id="data-cleaning" class="title-slide slide level2 center">
-<h2>Data cleaning</h2>
-
-<img data-src="images/RulesDataCleaning.jpg" class="r-stretch quarto-figure-center"><p class="caption">Image credit: https://kbroman.org/Talk_DataCleaning/data_cleaning.pdf</p><div class="footer footer-default">
+<div class="footer footer-default">
 
 </div>
+</section>
 </section>
     </div>
   </div>

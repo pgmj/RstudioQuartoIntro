@@ -150,13 +150,13 @@ I have prepared a handout containing the most frequently used shortcuts
 -   various settings within a function are divided by `,`
 -   we can pipe/forward an object or function output to another function
     -   there are two pipes (we'll only use the first one)
-    -   `%\>%` - the `magrittr`
+    -   `%\>%` - the `magrittr` pipe (*shift+ctrl+m*)
     -   `|>` - the `base` pipe
 
 ### Function syntax
 
 - comma separates input within the parantheses
-- the Help tab in lower right quadrant (or `?function` in console)
+- use the Help tab in lower right quadrant (or `?function` in console)
 
 
 ### Objects {.smaller}
@@ -172,31 +172,28 @@ I have prepared a handout containing the most frequently used shortcuts
     -   factor (fct)
     -   numerical (num, int, or dbl)
     
-### Object examples
+### Simple object examples
 
+Single values
 ``` r
 number <- 1
 number <- "1"
+```
 
+Multiple values (a vector)
+``` r
 number <- c(1,2)
 number <- c("one","two")
 ```
-    
-### object <- function()
 
-- examples with and without pipes
+A dataframe is a collection of rows/participants (vectors) and columns/variables (also vectors).
 
 ### Keyboard shortcuts {.smaller}
 
-::: incremental
 -   **TAB-completion** TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.
 -   **CTRL+enter** Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod som hålls samman med pipe-symbolen `%\>%` som radbrytning, eller ggplot-kod (som hålls samman med `+`) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
 -   **CTRL+SHIFT+enter** Kör en hel code chunk i Quarto. Spelar ingen roll var i chunken du har markören.
 -   **CTRL+SHIFT+m** Skapar en pipe-symbol
 -   **CTRL+ALT(option)+i** Skapar en ny code chunk i Quarto
 -   **CTRL/CMD+SHIFT+c** Kommentera bort/in alla rader som är markerade
-:::
 
-## Data cleaning
-
-![Image credit: https://kbroman.org/Talk_DataCleaning/data_cleaning.pdf](images/RulesDataCleaning.jpg){fig-align="center"}
