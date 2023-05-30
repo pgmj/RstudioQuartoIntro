@@ -142,6 +142,7 @@ I have prepared a handout containing the most frequently used shortcuts
     -   functions do things with data
     -   objects store data and output from functions
 -   let's first skim basic definitions, then go to practical examples
+- decimal is always *`.`*! Commas are used to separate things.
 
 ### Functions
 
@@ -151,6 +152,12 @@ I have prepared a handout containing the most frequently used shortcuts
     -   there are two pipes (we'll only use the first one)
     -   `%\>%` - the `magrittr`
     -   `|>` - the `base` pipe
+
+### Function syntax
+
+- comma separates input within the parantheses
+- the Help tab in lower right quadrant (or `?function` in console)
+
 
 ### Objects {.smaller}
 
@@ -164,6 +171,20 @@ I have prepared a handout containing the most frequently used shortcuts
     -   character (chr)
     -   factor (fct)
     -   numerical (num, int, or dbl)
+    
+### Object examples
+
+``` r
+number <- 1
+number <- "1"
+
+number <- c(1,2)
+number <- c("one","two")
+```
+    
+### object <- function()
+
+- examples with and without pipes
 
 ### Keyboard shortcuts {.smaller}
 

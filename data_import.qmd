@@ -57,6 +57,7 @@ library(lubridate) # for handling dates in data
 library(janitor) # for many things in data cleaning
 
 # these are mostly for data analysis and visualization
+library(visdat)
 library(psych)
 library(lme4)
 library(nlme)
@@ -72,7 +73,11 @@ library(ggdist)
 library(kableExtra)
 library(formattable)
 library(ggrepel)
+```
 
+Define a ggplot theme `theme_ki()` and standard table function, `kbl_ki()`.
+
+```{r}
 source("ki.R") # this reads an external file and loads whatever is in it
 ```
 
@@ -89,6 +94,87 @@ count <- dplyr::count
 recode <- car::recode
 rename <- dplyr::rename
 ```
+
+## Importing data
+
+```{r}
+df <- read_excel("data/MiCBT RCT data_Bridges repository.xlsx")
+```
+Look in the Environment quadrant. How many observations and variables do we have in the `df` object?
+
+Press the circle to the left of `df` to get a quick look at the data. We can see "missing" noted in several fields. Anything else you notice about the variables?
+
+Let's re-import the data and tell `read_excel()` to code missing correctly.
+
+```{r}
+df <- read_excel("data/MiCBT RCT data_Bridges repository.xlsx",
+                 na = "missing") %>% 
+  rename(id = BridgesID)
+```
+
+Have another look? That is a lot better!
+
+## Wide to long format
+
+Almost everything in R likes long format. What is the naming scheme?
+
+Let's look at the variables ending with "t".
+
+```{r}
+df %>% 
+  select(ends_with("t0")) %>% 
+  names()
+
+df %>% 
+  select(ends_with("t1")) %>% 
+  names()
+```
+
+Seems like some variables don't stick to the `_t[0-3]` scheme...
+
+We can demonstrate the option-click cursor in the example below.
+
+```{r}
+df.wide <- df %>% 
+  rename(MSESe_t0 = MSES_Et0,
+         MSESi_t0 = MSES_It0,
+         MSESe_t1 = MSES_Et1,
+         MSESi_t1 = MSES_It1,
+         MSESe_t2 = MSES_Et2,
+         MSESi_t2 = MSES_It2,
+         MSESe_t3 = MSES_Et3,
+         MSESi_t3 = MSES_It3)
+```
+
+Let's try to pivot this dataframe to long format.
+
+```{r}
+#| eval: false
+df.wide %>% 
+  pivot_longer(ends_with(c("t0","t1","t2","t3")))
+```
+
+> Error in `pivot_longer()`:
+> ! Can't combine `TK10_t0` <double> and `K10_di_t0` <character>.
+
+```{r}
+df.long <- df.wide %>% 
+  select(!K10_di_t0) %>% 
+  pivot_longer(cols = ends_with(c("t0","t1","t2","t3")),
+               names_to = c("measure", "time"),
+               names_sep = "_t")
+```
+
+And look at the df.
+
+```{r}
+glimpse(df.long)
+```
+
+## Descriptives
+
+
+
 
 ## Correlation & visualization
 
