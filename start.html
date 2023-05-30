@@ -29,70 +29,6 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-      }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-    div.sourceCode
-      { color: #f8f8f2;  }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #f8f8f2; } /* Normal */
-    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
-    code span.an { color: #d4d0ab; } /* Annotation */
-    code span.at { color: #00e0e0; } /* Attribute */
-    code span.bn { color: #d4d0ab; } /* BaseN */
-    code span.bu { color: #abe338; } /* BuiltIn */
-    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #abe338; } /* Char */
-    code span.cn { color: #ffd700; } /* Constant */
-    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
-    code span.cv { color: #ffd700; } /* CommentVar */
-    code span.do { color: #f8f8f2; } /* Documentation */
-    code span.dt { color: #ffa07a; } /* DataType */
-    code span.dv { color: #d4d0ab; } /* DecVal */
-    code span.er { color: #f07178; text-decoration: underline; } /* Error */
-    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
-    code span.fl { color: #d4d0ab; } /* Float */
-    code span.fu { color: #ffa07a; } /* Function */
-    code span.im { color: #abe338; } /* Import */
-    code span.in { color: #d4d0ab; } /* Information */
-    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
-    code span.op { color: #ffa07a; } /* Operator */
-    code span.ot { color: #00e0e0; } /* Other */
-    code span.pp { color: #dcc6e0; } /* Preprocessor */
-    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
-    code span.sc { color: #abe338; } /* SpecialChar */
-    code span.ss { color: #abe338; } /* SpecialString */
-    code span.st { color: #abe338; } /* String */
-    code span.va { color: #00e0e0; } /* Variable */
-    code span.vs { color: #abe338; } /* VerbatimString */
-    code span.wa { color: #dcc6e0; } /* Warning */
   </style>
   <link rel="stylesheet" href="start_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link rel="stylesheet" href="style.css">
@@ -579,94 +515,9 @@ Magnus Johansson, PhD <a href="https://orcid.org/0000-0003-1669-592X" class="qua
 <section id="data-cleaning" class="title-slide slide level2 center">
 <h2>Data cleaning</h2>
 
-<img data-src="images/RulesDataCleaning.jpg" class="r-stretch quarto-figure-center"></section>
-
-<section>
-<section id="setting-up-for-data-analysis" class="title-slide slide level2 center" data-background-color="#99D9DD">
-<h2>Setting up for data analysis</h2>
-<p>Let’s load packages/libraries.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># these are mostly for data management/wrangling and visualization</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(foreign)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(showtext)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(glue)</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">library</span>(arrow)</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">library</span>(car)</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">library</span>(grateful)</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">library</span>(styler)</span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">library</span>(car)</span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="fu">library</span>(broom.mixed)</span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb1-16"><a href="#cb1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co"># these are mostly for data analysis and vizualisation</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="fu">library</span>(psych)</span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="fu">library</span>(nlme)</span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="fu">library</span>(easystats)</span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb1-23"><a href="#cb1-23"></a><span class="fu">library</span>(mice)</span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="fu">library</span>(ggside)</span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="fu">library</span>(ggdist)</span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="fu">library</span>(formattable)</span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb1-30"><a href="#cb1-30"></a></span>
-<span id="cb1-31"><a href="#cb1-31"></a><span class="fu">source</span>(<span class="st">"ki.R"</span>) <span class="co"># this reads an external file and loads whatever is in it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="adaptions" class="title-slide slide level3 smaller center">
-<h3>Adaptions</h3>
-<p>Some functions exist in multiple packages, which can be a source of headaches and confusion.</p>
-<p>Below we define preferred functions that are frequently used. If desired, we can still use specific functions by using their package prefix, for instance <code>dplyr::recode()</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">### </span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>select <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>select</span>
-<span id="cb2-3"><a href="#cb2-3"></a>count <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>count</span>
-<span id="cb2-4"><a href="#cb2-4"></a>recode <span class="ot">&lt;-</span> car<span class="sc">::</span>recode</span>
-<span id="cb2-5"><a href="#cb2-5"></a>rename <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>rename</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section>
-<section id="correlation-visualization" class="title-slide slide level2 center">
-<h2>Correlation &amp; visualization</h2>
-<p>rework these for new dataset, first without “styling”</p>
-</section>
-<section id="correlation-matrix" class="title-slide slide level3 center">
-<h3>Correlation matrix</h3>
-<p>without and with grouping</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"WHO"</span>),GDS,WHOQoL_BREF,NMM,Gender) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">ggpairs</span>(<span class="fu">aes</span>(<span class="at">color =</span> Gender),<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> RISEpalette1,</span>
-<span id="cb3-5"><a href="#cb3-5"></a>                     <span class="at">aesthetics =</span> <span class="fu">c</span>(<span class="st">"color"</span>, <span class="st">"fill"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-
-<section id="easystats-plotcor_test" class="title-slide slide level3 center">
-<h3>easystats <code>plot(cor_test())</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">plot</span>(<span class="fu">cor_test</span>(df, <span class="st">"NMM"</span>, <span class="st">"WHOQoL_BREF"</span>)) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>, </span>
-<span id="cb4-3"><a href="#cb4-3"></a>                <span class="at">base_family =</span> <span class="st">"Lato"</span>) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">theme_rise</span>(<span class="at">fontfamily =</span> <span class="st">"Lato"</span>, </span>
-<span id="cb4-5"><a href="#cb4-5"></a>             <span class="at">axissize =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df, </span>
-<span id="cb4-7"><a href="#cb4-7"></a>             <span class="fu">aes</span>(NMM, WHOQoL_BREF), </span>
-<span id="cb4-8"><a href="#cb4-8"></a>             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a>    <span class="fu">ylab</span>(<span class="st">"WHOQoL-BREF"</span>) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a>    <span class="fu">xlab</span>(<span class="st">"NMM"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="footer footer-default">
+<img data-src="images/RulesDataCleaning.jpg" class="r-stretch quarto-figure-center"><p class="caption">Image credit: https://kbroman.org/Talk_DataCleaning/data_cleaning.pdf</p><div class="footer footer-default">
 
 </div>
-</section>
 </section>
     </div>
   </div>
@@ -881,44 +732,6 @@ Magnus Johansson, PhD <a href="https://orcid.org/0000-0003-1669-592X" class="qua
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

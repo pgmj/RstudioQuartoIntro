@@ -32,7 +32,7 @@ install.packages(c("ggrepel","formattable","kableExtra","ggdist","ggside",
                    "modelsummary","mice","GGally","easystats","patchwork",
                    "ggplot2","broom.mixed","nlme","lme4","psych","janitor",
                    "lubridate","skimr","car","styler","grateful","arrow","glue",
-                   "showtext","readxl","foreign","tidyverse"))
+                   "showtext","readxl","foreign","tidyverse","visdat"))
 ```
 
 And for convenience here are the packages in another format, with some brief explanations.
@@ -53,6 +53,7 @@ library(lubridate) # for handling dates in data
 library(janitor) # for many things in data cleaning
 
 # these are mostly for data analysis and visualization
+library(visdat)
 library(psych)
 library(lme4)
 library(nlme)

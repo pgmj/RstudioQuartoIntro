@@ -1,0 +1,124 @@
+---
+title: "Data import & descriptives"
+title-block-banner: "#870052"
+title-block-banner-color: "#FFFFFF"
+author: 
+  name: Magnus Johansson
+  affiliation: RISE Research Institutes of Sweden
+  affiliation-url: https://ri.se/shic
+  orcid: 0000-0003-1669-592X
+date: 2023-06-12
+date-format: YYYY-MM-DD
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Table of contents"
+    embed-resources: true
+    standalone: true
+    page-layout: full
+    mainfont: 'Arial'
+    code-overflow: wrap
+    code-tools: true
+    code-fold: show
+    code-link: true
+    number-sections: true
+    fig-dpi: 96
+    layout-align: left
+    linestretch: 1.6
+    theme: materia
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+css: style.css
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setting up for data analysis {background-color="#99D9DD"}
+
+Let's load packages/libraries.
+
+```{r}
+# these are mostly for data management/wrangling and visualization
+library(tidyverse) # for most things
+library(foreign) # for reading SPSS files
+library(readxl) # read MS Excel files
+library(showtext) # get fonts
+library(glue) # simplifies mixing text and code in figures and tables
+library(arrow) # support for efficient file formats
+library(grateful) # create table+references for packages used in a project
+library(styler) # only a one-time installation (it is an Rstudio plugin)
+library(car) # for car::recode only
+library(skimr) # data skimming
+library(lubridate) # for handling dates in data
+library(janitor) # for many things in data cleaning
+
+# these are mostly for data analysis and visualization
+library(psych)
+library(lme4)
+library(nlme)
+library(broom.mixed)
+library(ggplot2)
+library(patchwork)
+library(easystats)
+library(GGally)
+library(mice)
+library(modelsummary)
+library(ggside)
+library(ggdist)
+library(kableExtra)
+library(formattable)
+library(ggrepel)
+
+source("ki.R") # this reads an external file and loads whatever is in it
+```
+
+### Adaptions {.smaller}
+
+Some functions exist in multiple packages, which can be a source of headaches and confusion.
+
+Below we define preferred functions that are frequently used. If desired, we can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
+
+```{r}
+### 
+select <- dplyr::select
+count <- dplyr::count
+recode <- car::recode
+rename <- dplyr::rename
+```
+
+## Correlation & visualization
+
+rework these for new dataset, first without "styling"
+
+### Correlation matrix
+
+without and with grouping
+
+```{r}
+#| eval: false
+df %>% 
+  select(starts_with("WHO"),GDS,WHOQoL_BREF,NMM,Gender) %>% 
+  ggpairs(aes(color = Gender),alpha = 0.8) +
+  scale_color_manual(values = RISEpalette1,
+                     aesthetics = c("color", "fill"))
+```
+
+### easystats `plot(cor_test())`
+
+```{r}
+#| eval: false
+plot(cor_test(df, "NMM", "WHOQoL_BREF")) +
+  theme_minimal(base_size = 15, 
+                base_family = "Lato") +
+  theme_rise(fontfamily = "Lato", 
+             axissize = 15) +
+  geom_point(data = df, 
+             aes(NMM, WHOQoL_BREF), 
+             size = 2) +
+    ylab("WHOQoL-BREF") +
+    xlab("NMM")
+```
