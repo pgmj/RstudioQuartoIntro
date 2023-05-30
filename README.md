@@ -25,7 +25,7 @@ If you like, you can change the visual theme under the `Appearance` tab.
 
 ### Installing R packages
 
-Below is a list of all the packages planned for use during the course. In Rstudio, in the bottom right quadrant (under the tab "Files"), create a "New Blank File" of type "R script". Then copy & paste the code below into the new file. Rstudio should then automatically ask if you want to install the packages that are not already installed.
+Below is a list of all the packages planned for use during the course. In Rstudio, in the bottom right quadrant (under the tab "Files"), create a "New Blank File" of type "R script". Then copy & paste the code below into the new file. Rstudio should then automatically ask if you want to install the packages that are not already installed. A yellowish bar should appear at the top of the upper left quadrant (above your code).
 
 ```
 # these are mostly for data management/wrangling and visualization
@@ -58,6 +58,16 @@ library(ggdist)
 library(kableExtra)
 library(formattable)
 library(ggrepel)
+```
+
+If Rstudio does not automatically ask you to install missing packages, you can run this command in the console (or paste into a script file and run it from there):
+
+```
+install.packages(c("ggrepel","formattable","kableExtra","ggdist","ggside","modelsummary",
+                   "mice","GGally","easystats","patchwork","ggplot2","broom.mixed",
+                   "nlme","lme4","psych","janitor","lubridate","skimr","car",
+                   "styler","grateful","arrow","glue","showtext","readxl","foreign",
+                   "tidyverse"))
 ```
 
 ### Getting all the course files
