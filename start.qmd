@@ -4,7 +4,7 @@ title-block-banner: "#870052"
 title-block-banner-color: "#FFFFFF"
 title-slide-attributes:
   data-background-iframe: "multiple-images/index.html"
-  data-block-banner-color: "white"
+
 author: 
   name: Magnus Johansson, PhD
   affiliation: RISE Research Institutes of Sweden
@@ -12,6 +12,7 @@ author:
   orcid: 0000-0003-1669-592X
 date: 2023-06-12
 date-format: YYYY-MM-DD
+
 format: 
   html:
     toc: true
@@ -30,6 +31,7 @@ format:
     layout-align: left
     linestretch: 1.6
     theme: materia
+    
   revealjs:
     theme: [night, custom.scss]
     chalkboard: true
@@ -39,6 +41,16 @@ format:
     smaller: false
     center: false
     preload-iframes: true
+    
+  pdf:
+    papersize: a4
+    documentclass: article #article, report or book
+    classoption: [twocolumn, portrait]
+    
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
     
 execute:
   echo: true
@@ -163,6 +175,10 @@ I have prepared a handout containing the most frequently used shortcuts
 -   **CTRL+ALT(option)+i** Skapar en ny code chunk i Quarto
 -   **CTRL/CMD+SHIFT+c** Kommentera bort/in alla rader som är markerade
 :::
+
+## Data cleaning
+
+![](images/RulesDataCleaning.jpg){fig-align="center"}
 
 ## Setting up for data analysis {background-color="#99D9DD"}
 
