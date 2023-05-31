@@ -104,14 +104,14 @@ I have prepared a handout containing the most frequently used shortcuts
 
 -   We'll walk through them later on, and you have the handout as a reference
 
-## Fundamentals of reproducibility
+## Fundamentals
 
 -   **never touch your datafile manually!!!**
     -   anything you do with your data needs to be documented and traceable
 -   Don't erase code/things you try (only erase faulty code)
     -   you will want to retrace your steps at some point
     -   or cue someone else in on what you have been up to so far
-    -   **You can copy&paste later if you need to clean up for publication/sharing**
+    -   **You can copy&paste selected part of your code later if you need to clean up for publication/sharing**
 
 ### Good things
 

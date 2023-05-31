@@ -116,8 +116,8 @@ Let's re-import the data and tell `read_excel()` to code missing correctly.
 df <- read_excel("data/MiCBT RCT data_Bridges repository.xlsx",
                  na = "missing") %>% 
   rename(id = BridgesID,
-         Group = GROUP,
-         age = TK10_t0)
+         Group = GROUP) %>% 
+  mutate(age = TK10_t0)
 ```
 
 Have another look? That is a lot better!
@@ -178,8 +178,7 @@ ggplot(df,
 
 ```
 
-
-
+Or we can use `facet_wrap()` to make parallel plots.
 ```{r}
 ggplot(df,
        aes(x = age, fill = Group)) +
@@ -196,7 +195,7 @@ ggplot(df,
 ```
 
 
-variable names
+## Variable names
 
 
 ## Wide to long format
