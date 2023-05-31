@@ -114,7 +114,7 @@ Let's re-import the data and tell `read_excel()` to code missing correctly.
 df <- read_excel("data/MiCBT RCT data_Bridges repository.xlsx",
                  na = "missing") %>% 
   rename(id = BridgesID,
-         group = GROUP,
+         Group = GROUP,
          age = TK10_t0)
 ```
 
@@ -122,7 +122,9 @@ Have another look? That is a lot better!
 
 ## Demographics
 
-We'll start with gender and age.
+We'll start with age.
+
+### Tables
 
 ```{r}
 df %>% 
@@ -130,15 +132,18 @@ df %>%
   tbl_summary()
 
 df %>% 
-  select(age,group) %>% 
-  tbl_summary(by = group)
+  select(age,Group) %>% 
+  tbl_summary(by = Group)
+```
 
+### Figures
+```{r}
 hist(df$age)
+
 hist(df$age, 
      col = "lightblue", 
      main = "Histogram of participant age",
      xlab = "Age")
-
 
 ggplot(df,
        aes(x = age)) +
@@ -149,14 +154,17 @@ ggplot(df,
   theme_ki()
 
 ggplot(df,
-       aes(x = age, fill = group)) +
+       aes(x = age, fill = Group)) +
   geom_histogram() +
   labs(title = "Histogram of participant age",
        x = "Age",
        y = "Count") +
   theme_ki() +
-  scale_y_continuous(breaks = extended_breaks)
+  scale_y_continuous(breaks = c(0,4,8,12)) +
+  scale_color_manual(values = ki_color_palette, 
+                     aesthetics = c("fill","color"))
 
+# label = label_comma(accuracy = 1)
 ```
 
 

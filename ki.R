@@ -1,4 +1,4 @@
-ki_color_palette <- c("Mörk plommon" = "#4F0433",
+ki_color_palette_labelled <- c("Mörk plommon" = "#4F0433",
                       "Orange" = "#FF876F",
                       "Ljusorange" = "#FEEEEB",
                       "Ljusblå" = "#EDF4F4",
@@ -6,6 +6,15 @@ ki_color_palette <- c("Mörk plommon" = "#4F0433",
                       "Mörk orange" = "#B84145",
                       "Mörkblå" = "#002C34",
                       "Blå" = "#4DB5BC")
+
+ki_color_palette <- c("#4F0433",
+                      "#FF876F",
+                      "#FEEEEB",
+                      "#EDF4F4",
+                      "#870052",
+                      "#B84145",
+                      "#002C34",
+                      "#4DB5BC")
 
 # DM Sans
 library(showtext)
