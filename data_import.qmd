@@ -61,6 +61,8 @@ library(lubridate) # for handling dates in data
 library(janitor) # for many things in data cleaning
 
 # these are mostly for data analysis and visualization
+library(gtsummary)
+library(scales)
 library(visdat)
 library(psych)
 library(lme4)
@@ -137,6 +139,8 @@ df %>%
 ```
 
 ### Figures
+
+Base R examples.
 ```{r}
 hist(df$age)
 
@@ -144,18 +148,26 @@ hist(df$age,
      col = "lightblue", 
      main = "Histogram of participant age",
      xlab = "Age")
+```
 
+With ggplot we have a lot more flexibility.
+```{r}
 ggplot(df,
        aes(x = age)) +
-  geom_histogram() +
+  geom_histogram(fill = "lightblue",
+                 color = "black") +
   labs(title = "Histogram of participant age",
        x = "Age",
        y = "Count") +
   theme_ki()
+```
 
+Fill color based on Group variable.
+- dynamic color/fill needs to be within the `aes()` function (aesthetics).
+```{r}
 ggplot(df,
        aes(x = age, fill = Group)) +
-  geom_histogram() +
+  geom_histogram(color = "black") +
   labs(title = "Histogram of participant age",
        x = "Age",
        y = "Count") +
@@ -164,7 +176,23 @@ ggplot(df,
   scale_color_manual(values = ki_color_palette, 
                      aesthetics = c("fill","color"))
 
-# label = label_comma(accuracy = 1)
+```
+
+
+
+```{r}
+ggplot(df,
+       aes(x = age, fill = Group)) +
+  geom_histogram(color = "white") +
+  labs(title = "Histogram of participant age",
+       x = "Age",
+       y = "Count") +
+  theme_ki() +
+  scale_y_continuous(breaks = c(0,4,8,12)) +
+  scale_color_manual(values = ki_color_palette, 
+                     aesthetics = c("fill","color"),
+                     guide = "none") +
+  facet_wrap(~Group)
 ```
 
 
