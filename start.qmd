@@ -34,8 +34,8 @@ format:
     
   revealjs:
     theme: [night, custom.scss]
-    chalkboard: true
-    self-contained: false
+    chalkboard: false
+    self-contained: true
     slide-level: 4
     scrollable: true
     smaller: false
