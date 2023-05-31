@@ -80,6 +80,10 @@ I hope that you will be fairly comfortable with:
 -   getting something out of the many online articles using R for analysis
 -   searching the internet for help
 
+### Words of wisdom
+
+![https://datavizs23.classes.andrewheiss.com/slides/15-slides.html#62](images/teachingYourself.png)
+
 ## Overview for today {background-color="#99D9DD"}
 
 -   the basics of using Rstudio
@@ -128,13 +132,20 @@ I have prepared a handout containing the most frequently used shortcuts
 ::: incremental
 -   4 quadrants with tabs in each
     -   code, console, environment & output/help
--   Projects!
+-   projects!
 -   outline & line numbers
--   Quarto code chunks & chunk output
--   source vs visual
 -   moving a code tab to a separate window
 -   code editor is helpful and sometimes confusing
 :::
+
+## Quarto basics
+
+- YAML
+- code chunks & chunk output
+- source vs visual
+- headings and levels
+- tbl-caps and fig-caps
+- panel-tabset
 
 ## Basics about R
 

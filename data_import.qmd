@@ -118,6 +118,13 @@ df <- read_excel("data/MiCBT RCT data_Bridges repository.xlsx",
 
 Have another look? That is a lot better!
 
+## Demographics
+
+We'll start with gender and age.
+
+
+
+
 ## Wide to long format
 
 Almost everything in R likes long format. What is the naming scheme?

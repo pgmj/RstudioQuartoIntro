@@ -32,7 +32,8 @@ install.packages(c("ggrepel","formattable","kableExtra","ggdist","ggside",
                    "modelsummary","mice","GGally","easystats","patchwork",
                    "ggplot2","broom.mixed","nlme","lme4","psych","janitor",
                    "lubridate","skimr","car","styler","grateful","arrow","glue",
-                   "showtext","readxl","foreign","tidyverse","visdat"))
+                   "showtext","readxl","foreign","tidyverse","visdat",
+                   "gtsummary"))
 ```
 
 And for convenience here are the packages in another format, with some brief explanations.
@@ -69,6 +70,7 @@ library(ggdist)
 library(kableExtra)
 library(formattable)
 library(ggrepel)
+library(gtsummary)
 ```
 
 ### Getting all the course files
