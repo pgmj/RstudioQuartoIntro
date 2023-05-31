@@ -19,12 +19,10 @@ theme_ki <- function(fontfamily = "DM Sans", axisSize = 13, titleSize = 15, subt
                        panelDist = 0.6, legendSize = 11, legendTsize = 11) {
   theme_minimal() +
     theme(
-      text = element_text(family = fontfamily,
-                          face = "regular"),
+      text = element_text(family = fontfamily),
       plot.title = element_text(
         family = fontfamily,
-        size = titleSize,
-        face = "medium"
+        size = titleSize
       ),
       plot.subtitle = element_text(
         family = fontfamily,

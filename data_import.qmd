@@ -113,7 +113,9 @@ Let's re-import the data and tell `read_excel()` to code missing correctly.
 ```{r}
 df <- read_excel("data/MiCBT RCT data_Bridges repository.xlsx",
                  na = "missing") %>% 
-  rename(id = BridgesID)
+  rename(id = BridgesID,
+         group = GROUP,
+         age = TK10_t0)
 ```
 
 Have another look? That is a lot better!
@@ -122,7 +124,43 @@ Have another look? That is a lot better!
 
 We'll start with gender and age.
 
+```{r}
+df %>% 
+  select(age) %>% 
+  tbl_summary()
 
+df %>% 
+  select(age,group) %>% 
+  tbl_summary(by = group)
+
+hist(df$age)
+hist(df$age, 
+     col = "lightblue", 
+     main = "Histogram of participant age",
+     xlab = "Age")
+
+
+ggplot(df,
+       aes(x = age)) +
+  geom_histogram() +
+  labs(title = "Histogram of participant age",
+       x = "Age",
+       y = "Count") +
+  theme_ki()
+
+ggplot(df,
+       aes(x = age, fill = group)) +
+  geom_histogram() +
+  labs(title = "Histogram of participant age",
+       x = "Age",
+       y = "Count") +
+  theme_ki() +
+  scale_y_continuous(breaks = extended_breaks)
+
+```
+
+
+variable names
 
 
 ## Wide to long format
