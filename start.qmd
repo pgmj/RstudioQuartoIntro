@@ -107,10 +107,10 @@ I have prepared a handout containing the most frequently used shortcuts
 ## Fundamentals
 
 -   **never touch your datafile manually!!!**
-    -   anything you do with your data needs to be documented and traceable
+    -   everything you do with your data needs to be documented
 -   Don't erase code/things you try (only erase faulty code)
-    -   you will want to retrace your steps at some point
-    -   or cue someone else in on what you have been up to so far
+    -   you need to be able to retrace your steps
+    -   makes it easier to involve others
     -   **You can copy&paste selected part of your code later if you need to clean up for publication/sharing**
 
 ### Good things
@@ -119,7 +119,7 @@ I have prepared a handout containing the most frequently used shortcuts
 -   Traceability
     -   Transparency in decision making during analysis
 -   Reproducibility
--   Freely available tools
+-   We use freely available tools
 -   Documentation in the same file as analysis code
 :::
 
@@ -142,18 +142,18 @@ I have prepared a handout containing the most frequently used shortcuts
 
 - YAML
 - code chunks & chunk output
-- source vs visual
-- headings and levels
-- tbl-caps and fig-caps
-- panel-tabset
+- source view and "visual"
+- headings and structure
+- labelling with tbl- and fig-
+- (panel-tabset)
 
 ## Basics about R
 
--   it is based on `functions()` and objects
+-   based on `functions()` and objects
     -   functions do things with data
     -   objects store data and output from functions
 -   let's first skim basic definitions, then go to practical examples
-- decimal is always *`.`*! Commas are used to separate things.
+- decimal symbol is always *`.`*! Commas are used to separate things.
 
 ### Functions
 
@@ -161,19 +161,20 @@ I have prepared a handout containing the most frequently used shortcuts
 -   various settings within a function are divided by `,`
 -   we can pipe/forward an object or function output to another function
     -   there are two pipes (we'll only use the first one)
-    -   `%\>%` - the `magrittr` pipe (*shift+ctrl+m*)
+    -   `%>%` - the `magrittr` pipe (*shift+ctrl+m*)
     -   `|>` - the `base` pipe
 
 ### Function syntax
 
 - comma separates input within the parantheses
+  - `hist(data, xlab = "Distribution of variable")`
 - use the Help tab in lower right quadrant (or `?function` in console)
 
 
 ### Objects {.smaller}
 
 -   objects can have many different classes/formats
--   we will mostly work with dataframes (sometimes tibbles)
+-   we will mostly work with dataframes
     -   similar to what you see in a spreadsheet file (Excel)
     -   they consist of vectors (rows and columns)
     -   a vector is a string of values
@@ -197,7 +198,11 @@ number <- c(1,2)
 number <- c("one","two")
 ```
 
-A dataframe is a collection of rows/participants (vectors) and columns/variables (also vectors).
+Dataframes
+``` r
+df <- read_excel("path/to/excelfile.xls", sheet = 1)
+```
+- A dataframe is a collection of rows (vectors) and columns (also vectors).
 
 ### Keyboard shortcuts {.smaller}
 
