@@ -126,17 +126,29 @@ Have another look? That is a lot better!
 
 We'll start with age.
 
+```{r}
+summary(df$age)
+```
+`summary()` is a general function that can be used with many types of objects, including model outputs.
+
 ### Tables
+
+::: panel-tabset
+#### All participants
 
 ```{r}
 df %>% 
   select(age) %>% 
   tbl_summary()
+```
 
+#### Control/intervention group
+```{r}
 df %>% 
   select(age,Group) %>% 
   tbl_summary(by = Group)
 ```
+:::
 
 ### Figures
 

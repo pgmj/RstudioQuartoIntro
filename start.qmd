@@ -153,7 +153,8 @@ I have prepared a handout containing the most frequently used shortcuts
     -   functions do things with data
     -   objects store data and output from functions
 -   let's first skim basic definitions, then go to practical examples
-- decimal symbol is always *`.`*! Commas are used to separate things.
+- decimal symbol is always `.`! Commas are used to separate things.
+- everything written after a `#` is a comment
 
 ### Functions
 
@@ -167,13 +168,17 @@ I have prepared a handout containing the most frequently used shortcuts
 ### Function syntax
 
 - comma separates input within the parantheses
-  - `hist(data, xlab = "Distribution of variable")`
-- use the Help tab in lower right quadrant (or `?function` in console)
+``` r
+hist(data, xlab = "Distribution of variable", ylab = "Count")
+```
+- use the Help tab in lower right quadrant 
+  - or `?function` in console - ie. `?hist`
 
 
 ### Objects {.smaller}
 
 -   objects can have many different classes/formats
+  - you can use `class(object)` to check
 -   we will mostly work with dataframes
     -   similar to what you see in a spreadsheet file (Excel)
     -   they consist of vectors (rows and columns)
@@ -189,20 +194,20 @@ I have prepared a handout containing the most frequently used shortcuts
 Single values
 ``` r
 number <- 1
-number <- "1"
+character <- "1"
 ```
 
 Multiple values (a vector)
 ``` r
-number <- c(1,2)
-number <- c("one","two")
+numbers <- c(1,2)
+characters <- c("one","two")
 ```
 
-Dataframes
+Dataframe
 ``` r
 df <- read_excel("path/to/excelfile.xls", sheet = 1)
+df2 <- read.spss("path/to/spssfile.sav", to.data.frame = TRUE)
 ```
-- A dataframe is a collection of rows (vectors) and columns (also vectors).
 
 ### Keyboard shortcuts {.smaller}
 
