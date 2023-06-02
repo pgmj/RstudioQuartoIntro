@@ -405,9 +405,32 @@ And look at the df.
 glimpse(df.long)
 ```
 
-## Descriptives
+Nice! Let's choose some variables to focus on.
 
+From earlier:
 
+> The intent of this study is to examine the effectiveness of MiCBT to create changes in clinical measures of **depression, anxiety and stress**. It is hypothesized that these changes will occur during the program in stages 1,2 and 3 and be **enhanced in stage 4 because of the additional practice time**.
+
+```{r}
+df.wide %>% 
+  select(contains(c("DASS","dep","anx","str")))
+```
+
+We can subset a dataframe with only these variables, group, age, and sex. But we want to avoid the `distresstol_` variables.
+
+```{r}
+df.mod <- df.wide %>% 
+  select(contains(c("DASS","dep","anx","str")),
+         Group,age,sex) %>% 
+  select(!contains("distresstol")) %>% 
+  pivot_longer(ends_with(c("t0","t1","t2","t3")),
+               names_to = c("measure", "time"),
+               names_sep = "_t")
+```
+
+```{r}
+glimpse(df.mod)
+```
 
 
 ## Correlation & visualization
