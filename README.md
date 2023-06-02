@@ -81,6 +81,12 @@ First, you need to install Git. Download links: <https://git-scm.com/downloads>
 Then you are going to "clone" this code repository to a folder on your
 computer. There are two ways to go about this. Either you start up a terminal/shell/command prompt and navigate to where you would like to put the folder (a subfolder will automatically be created) and run the command `git clone https://github.com/pgmj/RstudioQuartoIntro.git`, or you can use a [graphical user interface for git](https://git-scm.com/downloads/guis). I have no experience with the GUI, so you will have to figure that out for yourself.
 
+### Credits
+
+The dataset used:
+Mindfulness-integrated cognitive behaviour therapy (MiCBT) randomised controlled trial dataset.xlsx. (2020). [Data set]. Monash University. https://doi.org/10.26180/13240304
+
+
 ## Additional materials for the curious
 
 It is not expected that you look at these before we start the course.

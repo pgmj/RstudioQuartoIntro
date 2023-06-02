@@ -42,16 +42,6 @@ format:
     center: false
     preload-iframes: true
     
-  pdf:
-    papersize: a4
-    documentclass: article #article, report or book
-    classoption: [twocolumn, portrait]
-    
-  docx:
-    toc: true
-    number-sections: true
-    highlight-style: github
-    
 execute:
   echo: true
   warning: false
@@ -218,3 +208,6 @@ df2 <- read.spss("path/to/spssfile.sav", to.data.frame = TRUE)
 -   **CTRL+ALT(option)+i** Skapar en ny code chunk i Quarto
 -   **CTRL/CMD+SHIFT+c** Kommentera bort/in alla rader som är markerade
 
+## Intro done
+
+Next: importing, inspecting and visualizing data
