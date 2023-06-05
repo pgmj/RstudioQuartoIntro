@@ -106,6 +106,8 @@ I have prepared a handout containing the most frequently used shortcuts
 ### Good things
 
 ::: incremental
+- Creating templates for data analysis 
+  - quality assurance!
 -   Traceability
     -   Transparency in decision making during analysis
 -   Reproducibility

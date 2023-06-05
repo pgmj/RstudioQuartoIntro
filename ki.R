@@ -59,7 +59,8 @@ theme_ki <- function(fontfamily = "DM Sans", axisSize = 13, titleSize = 15, subt
       strip.text = element_text(size = stripSize),
       legend.background = element_rect(color = "lightgrey"),
       strip.background = element_rect(color = "lightgrey"),
-      panel.spacing = unit(panelDist, "cm", data = NULL)
+      panel.spacing = unit(panelDist, "cm", data = NULL),
+      panel.border = element_rect(color = "grey", fill = NA)
     )
 }
 

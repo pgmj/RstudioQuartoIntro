@@ -90,17 +90,17 @@ library(psych)
 library(lme4)
 library(nlme)
 library(broom.mixed)
-library(ggplot2)
 library(patchwork)
 library(easystats)
-library(GGally)
 library(mice)
 library(modelsummary)
-library(ggside)
+#library(ggside) # causes problems with GGally
 library(ggdist)
 library(kableExtra)
 library(formattable)
 library(ggrepel)
+library(GGally)
+
 ```
 
 Define a ggplot theme `theme_ki()` and standard table function, `kbl_ki()`.
@@ -111,7 +111,7 @@ source("ki.R") # this reads an external file and loads whatever is in it
 
 ### Adaptions {.smaller}
 
-Some functions exist in multiple packages, which can be a source of headaches and confusion.
+Some functions exist in multiple packages, which can be a source of headaches and confusion. Loading `library(conflicted)` will provide errors every time you use a function that is available in multiple loaded packages, which can be helpful to avoid problems (but also annoying if you already have things under control).
 
 Below we define preferred functions that are frequently used. If desired, we can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
 
@@ -202,11 +202,20 @@ df <- df %>%
          sex = sample(1:2, nrow(df), replace=TRUE))
 ```
 
+We made a gender/sex variable that is numeric, since this is often the case. You may want to turn it into a factor instead, with labels.
 
+```{r}
+df$sex <- factor(df$sex, 
+                 levels = c(1,2),
+                 labels = c("Female","Male"))
+```
+
+
+`summary()` is a general function that can be used with many types of objects, including model outputs.
 ```{r}
 summary(df$age)
 ```
-`summary()` is a general function that can be used with many types of objects, including model outputs.
+
 
 ### Tables
 
@@ -237,7 +246,7 @@ age.test
 
 ```{r}
 tidy(age.test) %>% 
-  mutate(across(where(is.numeric), ~ round(.x, 2))) %>% 
+  mutate_if(is.double, round, digits = 2) %>% 
   kbl_ki()
 ```
 :::
@@ -325,13 +334,15 @@ ggplot(df,
 
 ## Variable names
 
+Generally we should have systematic naming of variables, avoiding things like spaces (" "). There is an amazing function called `janitor::clean_names()` which defaults to using snake_case. It also offers options for things like camelCase and others. This functions is primarily useful when you get a dataset that someone else collected and you need to bring order to variables names.
+
 ```{r}
 df %>% 
   select(ends_with("t0")) %>% 
   names()
 ```
 
-Why is there a "T" pretty much everywhere? What happens if we remove it?
+Why is there a "T" at the beginning of most variables? What happens if we remove it?
 
 ```{r}
 df %>% 
@@ -340,12 +351,107 @@ df %>%
   names()
 ```
 
-A lot more readable. Let's rename the whole dataframe.
+A lot more readable. Please note that we did not "save" our changes in the previous code chunk. Let's rename all variables in the dataframe.
 
 ```{r}
 df <- df %>% 
   rename_all(~ str_replace(.x, "^T",""))
 ```
+
+## Skim
+
+We can use `skim()` to get a more detailed overview of the variables.
+
+```{r}
+df %>% 
+  select(starts_with(c("DASS","ANX","DEP","STRESS"))) %>% 
+  skim()
+```
+
+And grouped:
+
+```{r}
+df %>% 
+  select(Group,starts_with(c("DASS","ANX","DEP","STRESS"))) %>% 
+  group_by(Group) %>% 
+  skim() %>% 
+  arrange(Group) #try other sorting variables, and also try to reverse sorting
+```
+
+
+## Correlation & visualization
+
+rework these for new dataset, first without "styling"
+
+### Correlation matrix
+
+We'll leave DASS total scores out of this, since it contains the others.
+
+```{r}
+df %>% 
+  select(ANX_t0,DEP_t0,STRESS_t0) %>% 
+  ggpairs()
+```
+
+With grouping by gender.
+
+```{r}
+df %>% 
+  select(sex,ANX_t0,DEP_t0,STRESS_t0) %>% 
+  ggpairs(aes(color = sex, alpha = 0.85)) +
+  scale_color_manual(values = ki_color_palette,
+                     aesthetics = c("color", "fill")) +
+  theme_ki()
+
+```
+
+### easystats `plot(cor_test())`
+
+Good example to slice up and see what the various parts do.
+
+```{r}
+df %>% 
+  cor_test("ANX_t0", "DEP_t0") %>% 
+  plot() +
+  theme_ki() +
+  geom_point(data = df, 
+             aes(ANX_t0, DEP_t0), 
+             size = 2.4,
+             color = "#870052") +
+  geom_smooth(data = df, 
+              aes(ANX_t0, DEP_t0),
+              method = "lm",
+              fill = "#FF876F",
+              color = "#4F0433",
+              alpha = 0.4) +
+  labs(y = "Depression at pre (t0)",
+       x = "Anxiety at pre (t0)",
+       title = "Correlation between DASS-D and DASS-A at time 0.")
+```
+
+**Exercise:** create separate correlation plots for gender.
+Bonus points if you can get both in the same plot!
+
+## Missing data
+```{r}
+df %>% 
+  select(starts_with(c("DASS","ANX","DEP","STRESS"))) %>% 
+  vis_dat()
+```
+
+
+## Outliers
+
+```{r}
+df %>% 
+  select(starts_with("DASS")) %>% 
+  na.omit() %>% 
+  check_outliers()
+```
+
+Let's look closer at that case.
+
+Should we try other methods? See `?check_outliers`.
 
 
 ## Wide to long format
@@ -362,39 +468,12 @@ df %>%
   names()
 ```
 
-Seems like some variables don't stick to the `_t[0-3]` scheme...
-
-We can demonstrate the option-click cursor in the example below.
+For simplicity, we'll initially focus on the main outcome variables, DASS, DEP, ANX, and STRESS. Let's pivot the data to long format.
 
 ```{r}
-df.wide <- df %>% 
-  rename(MSESe_t0 = MSES_Et0,
-         MSESi_t0 = MSES_It0,
-         MSESe_t1 = MSES_Et1,
-         MSESi_t1 = MSES_It1,
-         MSESe_t2 = MSES_Et2,
-         MSESi_t2 = MSES_It2,
-         MSESe_t3 = MSES_Et3,
-         MSESi_t3 = MSES_It3)
-```
-
-below is a smarter solution for many variables, not worth the effort for just 2*4 variables
-```{r}
-#| eval: false
-
-df %>%
-  rename_all(~ str_replace(.x, "_Et","e_t")) %>%
-  rename_all(~ str_replace(.x, "_It","i_t")) %>%
-  select(starts_with("MSE")) %>%
-  names()
-
-```
-
-Let's try to pivot this dataframe to long format.
-
-```{r}
-df.long <- df.wide %>% 
-  pivot_longer(ends_with(c("t0","t1","t2","t3")),
+df.long <- df %>% 
+  select(id,Group,starts_with(c("DASS","ANX","DEP","STRESS"))) %>% 
+  pivot_longer(starts_with(c("DASS","ANX","DEP","STRESS")),
                names_to = c("measure", "time"),
                names_sep = "_t")
 ```
@@ -405,63 +484,3 @@ And look at the df.
 glimpse(df.long)
 ```
 
-Nice! Let's choose some variables to focus on.
-
-From earlier:
-
-> The intent of this study is to examine the effectiveness of MiCBT to create changes in clinical measures of **depression, anxiety and stress**. It is hypothesized that these changes will occur during the program in stages 1,2 and 3 and be **enhanced in stage 4 because of the additional practice time**.
-
-```{r}
-df.wide %>% 
-  select(contains(c("DASS","dep","anx","str")))
-```
-
-We can subset a dataframe with only these variables, group, age, and sex. But we want to avoid the `distresstol_` variables.
-
-```{r}
-df.mod <- df.wide %>% 
-  select(contains(c("DASS","dep","anx","str")),
-         Group,age,sex) %>% 
-  select(!contains("distresstol")) %>% 
-  pivot_longer(ends_with(c("t0","t1","t2","t3")),
-               names_to = c("measure", "time"),
-               names_sep = "_t")
-```
-
-```{r}
-glimpse(df.mod)
-```
-
-
-## Correlation & visualization
-
-rework these for new dataset, first without "styling"
-
-### Correlation matrix
-
-without and with grouping
-
-```{r}
-#| eval: false
-df %>% 
-  select(starts_with("WHO"),GDS,WHOQoL_BREF,NMM,Gender) %>% 
-  ggpairs(aes(color = Gender),alpha = 0.8) +
-  scale_color_manual(values = RISEpalette1,
-                     aesthetics = c("color", "fill"))
-```
-
-### easystats `plot(cor_test())`
-
-```{r}
-#| eval: false
-plot(cor_test(df, "NMM", "WHOQoL_BREF")) +
-  theme_minimal(base_size = 15, 
-                base_family = "Lato") +
-  theme_rise(fontfamily = "Lato", 
-             axissize = 15) +
-  geom_point(data = df, 
-             aes(NMM, WHOQoL_BREF), 
-             size = 2) +
-    ylab("WHOQoL-BREF") +
-    xlab("NMM")
-```

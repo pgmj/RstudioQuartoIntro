@@ -1,0 +1,467 @@
+---
+title: "Data import & descriptives"
+title-block-banner: "#870052"
+title-block-banner-color: "#FFFFFF"
+author: 
+  name: Magnus Johansson
+  affiliation: RISE Research Institutes of Sweden
+  affiliation-url: https://ri.se/shic
+  orcid: 0000-0003-1669-592X
+date: 2023-06-12
+date-format: YYYY-MM-DD
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Table of contents"
+    embed-resources: true
+    standalone: true
+    page-layout: full
+    mainfont: 'Arial'
+    code-overflow: wrap
+    code-tools: true
+    code-fold: show
+    code-link: true
+    number-sections: true
+    fig-dpi: 96
+    layout-align: left
+    linestretch: 1.6
+    theme: materia
+    
+  pdf:
+    papersize: a4
+    documentclass: article #article, report or book
+    #classoption: [twocolumn, portrait]
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
+always_allow_html: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+css: style.css
+editor_options: 
+  chunk_output_type: console
+---
+
+## Overview of this file
+
+- importing data
+- looking at data
+- descriptives
+  - tables
+  - figures
+  - some basic statistical analyses
+- missing data
+- wrangling data (wide to long, etc)
+
+
+## Data cleaning
+
+![Image credit: https://kbroman.org/Talk_DataCleaning/data_cleaning.pdf](images/RulesDataCleaning.jpg){fig-align="center"}
+
+## Setting up for data analysis {background-color="#99D9DD"}
+
+Let's load packages/libraries.
+
+```{r}
+# these are mostly for data management/wrangling and visualization
+library(tidyverse) # for most things
+library(foreign) # for reading SPSS files
+library(readxl) # read MS Excel files
+library(showtext) # get fonts
+library(glue) # simplifies mixing text and code in figures and tables
+library(arrow) # support for efficient file formats
+library(grateful) # create table+references for packages used in a project
+library(styler) # only a one-time installation (it is an Rstudio plugin)
+library(car) # for car::recode only
+library(skimr) # data skimming
+library(lubridate) # for handling dates in data
+library(janitor) # for many things in data cleaning
+
+# these are mostly for data analysis and visualization
+library(gtsummary)
+library(scales)
+library(visdat)
+library(psych)
+library(lme4)
+library(nlme)
+library(broom.mixed)
+library(ggplot2)
+library(patchwork)
+library(easystats)
+library(GGally)
+library(mice)
+library(modelsummary)
+library(ggside)
+library(ggdist)
+library(kableExtra)
+library(formattable)
+library(ggrepel)
+```
+
+Define a ggplot theme `theme_ki()` and standard table function, `kbl_ki()`.
+
+```{r}
+source("ki.R") # this reads an external file and loads whatever is in it
+```
+
+### Adaptions {.smaller}
+
+Some functions exist in multiple packages, which can be a source of headaches and confusion.
+
+Below we define preferred functions that are frequently used. If desired, we can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
+
+```{r}
+#library(conflicted)
+select <- dplyr::select
+count <- dplyr::count
+recode <- car::recode
+rename <- dplyr::rename
+filter <- dplyr::filter
+clean_names <- janitor::clean_names
+```
+
+## Importing data
+
+The open dataset we will use for our experiments was retrieved from https://doi.org/10.26180/13240304 and is available in the `data` subfolder of the R project folder we are currently working in. The description of the dataset on Figshare is:
+
+>De-identified dataset from a randomised controlled trial of Mindfulness-integrated cognitive behaviour therapy (MiCBT) versus a treatment-as-usual waitlist control. All participants completed the measures one week before the start of the MiCBT group intervention (T0), after week 4 (T1), at week 8 (T2, post-intervention), and then again after a 6-month follow up period (T3). A full description of the project methodology including the measures used in the trial is provided in the protocol paper (see References).
+
+And from the study protocol:
+
+> The intent of this study is to examine the effectiveness of MiCBT to create changes in clinical measures of depression, anxiety and stress. It is hypothesized that these changes will occur during the program in stages 1,2 and 3 and be enhanced in stage 4 because of the additional practice time. Compassion and ethics are taught in Stage 4 for relapse prevention which is not the focus of the current study.
+
+Looking at [the abbreviations section of the study protocol](https://bmcpsychiatry.biomedcentral.com/articles/10.1186/s12888-019-2411-1#abbreviations), we can hopefully get some variable name explanations:
+
+- EQ: Experiences Questionnaire
+- FS: Flourishing scale
+- K10: Kessler Psychological Distress Scale
+- MAIS: Multidimensional Assessment of Interoceptive Awareness
+- MB-EAT: Mindfulness-based Eating Program
+- MBI: Mindfulness-based Intervention
+- MBRE: Mindfulness-based Relationship Enhancement
+- MBSR: Mindfulness-based Stress Reducyion
+- MiCBT: Mindfulness integrated Cognitive Behavior Therapy
+- MSES: Mindfulness-based Self-efficacy Scale
+- NAS: Non-attachment Scale
+- SWLS: Satisfaction with Life Scale
+
+Let's read the datafile and have a first look.
+
+```{r}
+df <- read_excel("data/MiCBT RCT data_Bridges repository.xlsx")
+```
+Look in the Environment quadrant (upper right). How many observations and variables do we have in the `df` object?
+
+Press the circle to the left of `df` to get a quick look at the data. We can see the word "missing" noted in several fields. Anything else you notice about the variables?
+
+Let's re-import the data and tell `read_excel()` to code missing correctly.
+
+```{r}
+df <- read_excel("data/MiCBT RCT data_Bridges repository.xlsx",
+                 na = "missing")
+```
+
+Have another look at the data now and see what happened. You can go back and run the previous chunk to see the difference more clearly.
+
+Also, have a look at the naming scheme and see what pattern you find?
+
+The K10 questionnaire is used for pre-intervention measurement and screening, as well as follow-up measurement. Let's look at the variables containing "K10".
+
+```{r}
+df %>% 
+  select(contains("K10"))
+```
+
+`K10_di_t0` is a categorical variable created from `TK10_t0`, and it does not repeat for other time points. As such, it is mislabeled and we want to fix this. While we are at it, we can rename some other variables too.
+
+The syntax for `dplyr::rename()` is `newname = oldname`.
+
+```{r}
+df <- df %>% 
+  rename(id = BridgesID,
+         Group = GROUP,
+         K10preCat = K10_di_t0)
+```
+
+## Demographics
+
+The dataset does not include any demographics. Just for fun, we'll add randomly assigned age and gender variables. `mutate()` helps us create or modify variables.
+
+```{r}
+df <- df %>% 
+  mutate(age = rnorm(nrow(df), 
+                     mean = 44, 
+                     sd = 8),
+         age = as.integer(age),
+         age = recode(age,"0:18=19"),
+         sex = sample(1:2, nrow(df), replace=TRUE))
+```
+
+
+```{r}
+summary(df$age)
+```
+`summary()` is a general function that can be used with many types of objects, including model outputs.
+
+### Tables
+
+::: panel-tabset
+#### All participants
+
+```{r}
+df %>% 
+  select(age) %>% 
+  tbl_summary()
+```
+
+#### Control/intervention group
+```{r}
+df %>% 
+  select(age,Group) %>% 
+  tbl_summary(by = Group,
+              statistic = list(all_continuous() ~ "{mean} ({sd}, {min}-{max})"))
+```
+#### Difference?
+We can see that there isn't a difference, and we expect this since random sampling was used. But if you wanted to test the difference, this is one way.
+
+```{r}
+age.test <- t.test(age ~ Group, data = df)
+age.test
+```
+
+
+```{r}
+tidy(age.test) %>% 
+  mutate(across(where(is.numeric), ~ round(.x, 2))) %>% 
+  kbl_ki()
+```
+:::
+
+
+
+### Figures
+
+Base R examples.
+```{r}
+hist(df$age)
+
+hist(df$age, 
+     col = "lightblue", 
+     main = "Histogram of participant age",
+     xlab = "Age",
+     breaks = 24)
+```
+
+With ggplot we have a lot more flexibility. Note that as soon as `ggplot()` has been called, the line ends with `+` when we add plot configurations.
+```{r}
+df %>% 
+  ggplot(aes(x = age)) +
+  geom_histogram(fill = "lightblue",
+                 color = "black") +
+  labs(title = "Histogram of participant age",
+       x = "Age",
+       y = "Count") +
+  theme_ki()
+```
+
+Let's look separately at the Control group.
+
+```{r}
+df %>% 
+  filter(Group == "Control") %>% 
+  ggplot(aes(x = age)) +
+  geom_histogram(fill = "darkgreen",
+                 color = "white") +
+  labs(title = "Histogram of participant age",
+       x = "Age",
+       y = "Count",
+       subtitle = "Control group only") +
+  theme_ki()
+```
+
+
+#### Fill/color based on Group variable.
+
+We can have both in the same plot.
+
+- dynamic color/fill (based on a data variable) needs to be defined within the `aes()` function (aesthetics).
+
+```{r}
+ggplot(df,
+       aes(x = age, fill = Group)) +
+  geom_histogram(color = "black") +
+  labs(title = "Histogram of participant age",
+       x = "Age",
+       y = "Count") +
+  theme_ki() +
+  scale_y_continuous(breaks = c(0,4,8,12)) +
+  scale_color_manual(values = ki_color_palette, 
+                     aesthetics = c("fill","color"))
+
+```
+
+Or we can use `facet_wrap()` to make parallel plots.
+```{r}
+#| fig-height: 4
+ggplot(df,
+       aes(x = age, fill = Group)) +
+  geom_histogram(color = "white",
+                 binwidth = 3) +
+  labs(title = "Histogram of participant age",
+       x = "Age",
+       y = "Count") +
+  theme_ki() +
+  scale_y_continuous(breaks = c(0,4,8,12)) +
+  scale_color_manual(values = ki_color_palette, 
+                     aesthetics = c("fill","color"),
+                     guide = "none") +
+  facet_wrap(~Group)
+```
+
+## Variable names
+
+```{r}
+df %>% 
+  select(ends_with("t0")) %>% 
+  names()
+```
+
+Why is there a "T" pretty much everywhere? What happens if we remove it?
+
+```{r}
+df %>% 
+  select(ends_with("t0")) %>% 
+  rename_all(~ str_replace(.x, "^T","")) %>% 
+  names()
+```
+
+A lot more readable. Let's rename the whole dataframe.
+
+```{r}
+df <- df %>% 
+  rename_all(~ str_replace(.x, "^T",""))
+```
+
+
+## Wide to long format
+
+Almost everything in R likes long format. Let's look at the variables ending with "t".
+
+```{r}
+df %>% 
+  select(ends_with("t0")) %>% 
+  names()
+
+df %>% 
+  select(ends_with("t1")) %>% 
+  names()
+```
+
+Seems like some variables don't stick to the `_t[0-3]` scheme...
+
+We can demonstrate the option-click cursor in the example below.
+
+```{r}
+df.wide <- df %>% 
+  rename(MSESe_t0 = MSES_Et0,
+         MSESi_t0 = MSES_It0,
+         MSESe_t1 = MSES_Et1,
+         MSESi_t1 = MSES_It1,
+         MSESe_t2 = MSES_Et2,
+         MSESi_t2 = MSES_It2,
+         MSESe_t3 = MSES_Et3,
+         MSESi_t3 = MSES_It3)
+```
+
+below is a smarter solution for many variables, not worth the effort for just 2*4 variables
+```{r}
+#| eval: false
+
+df %>%
+  rename_all(~ str_replace(.x, "_Et","e_t")) %>%
+  rename_all(~ str_replace(.x, "_It","i_t")) %>%
+  select(starts_with("MSE")) %>%
+  names()
+
+```
+
+Let's try to pivot this dataframe to long format.
+
+```{r}
+df.long <- df.wide %>% 
+  pivot_longer(ends_with(c("t0","t1","t2","t3")),
+               names_to = c("measure", "time"),
+               names_sep = "_t")
+```
+
+And look at the df.
+
+```{r}
+glimpse(df.long)
+```
+
+Nice! Let's choose some variables to focus on.
+
+From earlier:
+
+> The intent of this study is to examine the effectiveness of MiCBT to create changes in clinical measures of **depression, anxiety and stress**. It is hypothesized that these changes will occur during the program in stages 1,2 and 3 and be **enhanced in stage 4 because of the additional practice time**.
+
+```{r}
+df.wide %>% 
+  select(contains(c("DASS","dep","anx","str")))
+```
+
+We can subset a dataframe with only these variables, group, age, and sex. But we want to avoid the `distresstol_` variables.
+
+```{r}
+df.mod <- df.wide %>% 
+  select(contains(c("DASS","dep","anx","str")),
+         Group,age,sex) %>% 
+  select(!contains("distresstol")) %>% 
+  pivot_longer(ends_with(c("t0","t1","t2","t3")),
+               names_to = c("measure", "time"),
+               names_sep = "_t")
+```
+
+```{r}
+glimpse(df.mod)
+```
+
+
+## Correlation & visualization
+
+rework these for new dataset, first without "styling"
+
+### Correlation matrix
+
+without and with grouping
+
+```{r}
+#| eval: false
+df %>% 
+  select(starts_with("WHO"),GDS,WHOQoL_BREF,NMM,Gender) %>% 
+  ggpairs(aes(color = Gender),alpha = 0.8) +
+  scale_color_manual(values = RISEpalette1,
+                     aesthetics = c("color", "fill"))
+```
+
+### easystats `plot(cor_test())`
+
+```{r}
+#| eval: false
+plot(cor_test(df, "NMM", "WHOQoL_BREF")) +
+  theme_minimal(base_size = 15, 
+                base_family = "Lato") +
+  theme_rise(fontfamily = "Lato", 
+             axissize = 15) +
+  geom_point(data = df, 
+             aes(NMM, WHOQoL_BREF), 
+             size = 2) +
+    ylab("WHOQoL-BREF") +
+    xlab("NMM")
+```
