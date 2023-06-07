@@ -12,14 +12,10 @@ date-format: YYYY-MM-DD
 format: 
   html:
     toc: true
-    toc-depth: 3
-    toc-title: "Table of contents"
     embed-resources: true
     standalone: true
-    page-layout: full
     mainfont: 'Arial'
     code-overflow: wrap
-    code-tools: true
     code-fold: show
     code-link: true
     number-sections: true
@@ -33,9 +29,10 @@ format:
     documentclass: article #article, report or book
     #classoption: [twocolumn, portrait]
   docx:
-    toc: true
-    number-sections: true
+    toc: false
+    number-sections: false
     highlight-style: github
+    
 always_allow_html: true
 execute:
   echo: true
@@ -54,14 +51,15 @@ editor_options:
 - descriptives
   - tables
   - figures
-  - some basic statistical analyses
+  - basic statistical analyses
 - missing data
+- checking for outliers
 - wrangling data (wide to long, etc)
 
 
 ## Data cleaning
 
-![Image credit: https://kbroman.org/Talk_DataCleaning/data_cleaning.pdf](images/RulesDataCleaning.jpg){fig-align="center"}
+![Image credit: <https://kbroman.org/Talk_DataCleaning/data_cleaning.pdf>](images/RulesDataCleaning.jpg){fig-align="center"}
 
 ## Setting up for data analysis {background-color="#99D9DD"}
 
@@ -127,7 +125,7 @@ clean_names <- janitor::clean_names
 
 ## Importing data
 
-The open dataset we will use for our experiments was retrieved from https://doi.org/10.26180/13240304 and is available in the `data` subfolder of the R project folder we are currently working in. The description of the dataset on Figshare is:
+The open dataset we will use for our experiments was retrieved from <https://doi.org/10.26180/13240304> and is available in the `data` subfolder of the R project folder we are currently working in. The description of the dataset on Figshare is:
 
 >De-identified dataset from a randomised controlled trial of Mindfulness-integrated cognitive behaviour therapy (MiCBT) versus a treatment-as-usual waitlist control. All participants completed the measures one week before the start of the MiCBT group intervention (T0), after week 4 (T1), at week 8 (T2, post-intervention), and then again after a 6-month follow up period (T3). A full description of the project methodology including the measures used in the trial is provided in the protocol paper (see References).
 
@@ -293,6 +291,34 @@ df %>%
   theme_ki()
 ```
 
+::: {.callout-tip}
+#### Practice
+
+Now make a new separate plot for the intervention group.
+:::
+
+
+### filter/select
+
+::: {.callout-note}
+Two key things to learn:
+
+- `filter()` works on rows, based on their column content
+- `select()` works on columns, based on their names
+:::
+
+
+This filters for inclusion of only one municipality:
+``` r
+df %>% 
+  filter(municipality == "Vallentuna")
+```
+
+This filters out (excludes) multiple municipalities:
+``` r
+df %>% 
+  filter(!municipality %in% c("Vallentuna","Vaxholm"))
+```
 
 #### Fill/color based on Group variable.
 
@@ -483,4 +509,5 @@ And look at the df.
 ```{r}
 glimpse(df.long)
 ```
+
 

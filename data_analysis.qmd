@@ -1,0 +1,53 @@
+---
+title: "Data import & descriptives"
+title-block-banner: "#870052"
+title-block-banner-color: "#FFFFFF"
+author: 
+  name: Magnus Johansson
+  affiliation: RISE Research Institutes of Sweden
+  affiliation-url: https://ri.se/shic
+  orcid: 0000-0003-1669-592X
+date: 2023-06-12
+date-format: YYYY-MM-DD
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    standalone: true
+    mainfont: 'Arial'
+    code-overflow: wrap
+    code-fold: show
+    code-link: true
+    number-sections: true
+    fig-dpi: 96
+    layout-align: left
+    linestretch: 1.6
+    theme: materia
+    
+  pdf:
+    papersize: a4
+    documentclass: article #article, report or book
+    #classoption: [twocolumn, portrait]
+  docx:
+    toc: false
+    number-sections: false
+    highlight-style: github
+    
+always_allow_html: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+css: style.css
+editor_options: 
+  chunk_output_type: console
+---
+
+## Overview of this file
+
+link to `marginaleffects`!
+
+meme
+
+https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Ftwitter.com%2Fstephenjwild%2Fstatus%2F1666056019993034755%3Fs%3D58%26t%3DpmZgTrnQaSomFh71Kw7CCQ&data=05%7C01%7Cmagnus.p.johansson%40ri.se%7C86574cbbe88241922b9d08db671db894%7C5a9809cf0bcb413a838a09ecc40cc9e8%7C0%7C0%7C638217149565330441%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=c%2Bqt%2F33LsN5AlyzaZmKwePdStg2solZ6mZxitpRG3lM%3D&reserved=0

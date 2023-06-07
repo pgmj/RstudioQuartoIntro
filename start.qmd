@@ -72,7 +72,7 @@ I hope that you will be fairly comfortable with:
 
 ### Words of wisdom
 
-![https://datavizs23.classes.andrewheiss.com/slides/15-slides.html#62](images/teachingYourself.png)
+![<https://datavizs23.classes.andrewheiss.com/slides/15-slides.html#62>](images/teachingYourself.png)
 
 ## Overview for today {background-color="#99D9DD"}
 
@@ -106,7 +106,7 @@ I have prepared a handout containing the most frequently used shortcuts
 ### Good things
 
 ::: incremental
-- Creating templates for data analysis 
+- Creating step-by-step templates for data analysis 
   - quality assurance!
 -   Traceability
     -   Transparency in decision making during analysis
@@ -117,7 +117,7 @@ I have prepared a handout containing the most frequently used shortcuts
 
 ### Levels of reproducibility {.smaller}
 
-![Meme credit: https://bookdown.org/pdr_higgins/rmrwr/introduction-to-reproducibility.html#cleaning-and-analyzing-your-data](images/levelsOfReproducibility.JPG){fig-align="center"}
+![Meme credit: <https://bookdown.org/pdr_higgins/rmrwr/introduction-to-reproducibility.html#cleaning-and-analyzing-your-data>](images/levelsOfReproducibility.JPG){fig-align="center"}
 
 ## Rstudio layout 
 
@@ -138,6 +138,13 @@ I have prepared a handout containing the most frequently used shortcuts
 - headings and structure
 - labelling with tbl- and fig-
 - (panel-tabset)
+
+### Quarto basics recap
+
+- `ctrl+alt/option+i` creates a new code chunk
+- `#` creates a heading, `##` makes a level 2 heading
+-  the Quarto website is super helpful!
+ - <https://quarto.org/docs/authoring/markdown-basics.html>
 
 ## Basics about R
 
@@ -165,6 +172,7 @@ hist(data, xlab = "Distribution of variable", ylab = "Count")
 ```
 - use the Help tab in lower right quadrant 
   - or `?function` in console - ie. `?hist`
+  - tab-complete also works (I'll demo)
 
 
 ### Objects {.smaller}
@@ -174,12 +182,12 @@ hist(data, xlab = "Distribution of variable", ylab = "Count")
 -   we will mostly work with dataframes
     -   similar to what you see in a spreadsheet file (Excel)
     -   they consist of vectors (rows and columns)
-    -   a vector is a string of values
+    -   a `vector` is a string of values
 -   each object or column in a dataframe can have a different class
     -   we will primarily work with
-    -   character (chr)
-    -   factor (fct)
-    -   numerical (num, int, or dbl)
+    -   `character` (chr)
+    -   `factor` (fct)
+    -   `numerical` (num, int, or dbl)
     
 ### Simple object examples
 
