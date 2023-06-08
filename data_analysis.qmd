@@ -11,6 +11,7 @@ date: 2023-06-12
 date-format: YYYY-MM-DD
 format: 
   html:
+    
     toc: true
     embed-resources: true
     standalone: true
@@ -23,16 +24,15 @@ format:
     layout-align: left
     linestretch: 1.6
     theme: materia
-    
   pdf:
     papersize: a4
     documentclass: article #article, report or book
     #classoption: [twocolumn, portrait]
   docx:
+    
     toc: false
     number-sections: false
     highlight-style: github
-    
 always_allow_html: true
 execute:
   echo: true
@@ -46,8 +46,131 @@ editor_options:
 
 ## Overview of this file
 
+- Visualizing distributions
+- Running models
+- Checking assumptions
+- Effects(?)
+
+### Setting up
+
+Let's load packages/libraries.
+
+```{r}
+#| code-fold: show
+# these are mostly for data management/wrangling and visualization
+library(tidyverse) # for most things
+library(foreign) # for reading SPSS files
+library(readxl) # read MS Excel files
+library(showtext) # get fonts
+library(glue) # simplifies mixing text and code in figures and tables
+library(arrow) # support for efficient file formats
+library(grateful) # create table+references for packages used in a project
+library(styler) # only a one-time installation (it is an Rstudio plugin)
+library(car) # for car::recode only
+library(skimr) # data skimming
+library(lubridate) # for handling dates in data
+library(janitor) # for many things in data cleaning
+
+# these are mostly for data analysis and visualization
+library(gtsummary)
+library(scales)
+library(visdat)
+library(psych)
+library(lme4)
+library(nlme)
+library(broom.mixed)
+library(patchwork)
+library(easystats)
+library(mice)
+library(modelsummary)
+library(ggdist)
+library(kableExtra)
+library(formattable)
+library(ggrepel)
+library(ggrain)
+```
+
+Define a ggplot theme `theme_ki()`, a standard table function, `kbl_ki()`, and a color palette based on KI's design guide, `ki_color_palette`.
+
+```{r}
+#| code-fold: show
+source("ki.R") # this reads an external file and loads whatever is in it
+```
+
+
+## Visualizations
+
+### Distributions
+
+#### Histogram
+
+```{r}
+df.long %>% 
+  filter(Group == "Control") %>% 
+  ggplot(aes(x = value, fill = measure)) +
+  geom_histogram(binwidth = 4) +
+  facet_grid(measure~time) +
+  theme_ki() +
+  scale_fill_manual(values = ki_color_palette)
+
+```
+
+#### Density
+
+```{r}
+df.long %>% 
+  filter(Group == "Control") %>% 
+  ggplot(aes(x = value, fill = measure)) +
+  geom_density() +
+  facet_grid(measure~time) +
+  theme_ki() +
+  scale_fill_manual(values = ki_color_palette)
+```
+
+What do these distributions look like to you? Normal?
+
+### Individuals over time
+
+```{r}
+df.long %>%
+  filter(measure == "DEP") %>% 
+  ggplot(aes(x = time, y = value, group = time, fill = Group, color = Group)) +
+  geom_rain(
+    #alpha = .6,
+    boxplot.args = list(color = "black", outlier.shape = NA),
+    id.long.var = "id"
+  ) +
+  scale_fill_brewer(palette = "Dark2",
+                    aesthetics = c("color","fill")) +
+  theme_ki() +
+  facet_wrap(~Group,
+             nrow = 2)
+```
+
+
+## Linear model
+
+summary 
+glance 
+tidy 
+tbl_
+tab_model?
+
+```{r}
+pred2 <- estimate_expectation(m2, data = "grid")
+plot(pred2) +
+  scale_x_continuous(breaks = c(0,1)) +
+  theme_minimal() +
+  theme_rise()
+plot(parameters(m2))
+```
+
+### Check assumptions
+
+
+
 link to `marginaleffects`!
 
 meme
 
-https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Ftwitter.com%2Fstephenjwild%2Fstatus%2F1666056019993034755%3Fs%3D58%26t%3DpmZgTrnQaSomFh71Kw7CCQ&data=05%7C01%7Cmagnus.p.johansson%40ri.se%7C86574cbbe88241922b9d08db671db894%7C5a9809cf0bcb413a838a09ecc40cc9e8%7C0%7C0%7C638217149565330441%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=c%2Bqt%2F33LsN5AlyzaZmKwePdStg2solZ6mZxitpRG3lM%3D&reserved=0
+https://twitter.com/stephenjwild/status/1666056019993034755

@@ -16,7 +16,7 @@ format:
     standalone: true
     mainfont: 'Arial'
     code-overflow: wrap
-    code-fold: show
+    code-fold: true
     code-link: true
     number-sections: true
     fig-dpi: 96
@@ -66,6 +66,7 @@ editor_options:
 Let's load packages/libraries.
 
 ```{r}
+#| code-fold: show
 # these are mostly for data management/wrangling and visualization
 library(tidyverse) # for most things
 library(foreign) # for reading SPSS files
@@ -92,7 +93,7 @@ library(patchwork)
 library(easystats)
 library(mice)
 library(modelsummary)
-#library(ggside) # causes problems with GGally
+library(ggrain)
 library(ggdist)
 library(kableExtra)
 library(formattable)
@@ -104,6 +105,8 @@ library(GGally)
 Define a ggplot theme `theme_ki()` and standard table function, `kbl_ki()`.
 
 ```{r}
+#| code-fold: show
+
 source("ki.R") # this reads an external file and loads whatever is in it
 ```
 
@@ -114,6 +117,8 @@ Some functions exist in multiple packages, which can be a source of headaches an
 Below we define preferred functions that are frequently used. If desired, we can still use specific functions by using their package prefix, for instance `dplyr::recode()`.
 
 ```{r}
+#| code-fold: show
+
 #library(conflicted)
 select <- dplyr::select
 count <- dplyr::count
@@ -237,13 +242,13 @@ df %>%
 We can see that there isn't a difference, and we expect this since random sampling was used. But if you wanted to test the difference, this is one way.
 
 ```{r}
-age.test <- t.test(age ~ Group, data = df)
-age.test
+age.ttest <- t.test(age ~ Group, data = df)
+age.ttest
 ```
 
 
 ```{r}
-tidy(age.test) %>% 
+tidy(age.ttest) %>% 
   mutate_if(is.double, round, digits = 2) %>% 
   kbl_ki()
 ```
@@ -355,7 +360,8 @@ ggplot(df,
   scale_color_manual(values = ki_color_palette, 
                      aesthetics = c("fill","color"),
                      guide = "none") +
-  facet_wrap(~Group)
+  facet_wrap(~Group,
+             ncol = 2)
 ```
 
 ## Variable names
@@ -377,7 +383,7 @@ df %>%
   names()
 ```
 
-A lot more readable. Please note that we did not "save" our changes in the previous code chunk. Let's rename all variables in the dataframe.
+A lot more readable. Please note that we did not "save" our changes in the previous code chunk. Let's rename all variables in the dataframe that start with a capital "T".
 
 ```{r}
 df <- df %>% 
@@ -390,7 +396,7 @@ We can use `skim()` to get a more detailed overview of the variables.
 
 ```{r}
 df %>% 
-  select(starts_with(c("DASS","ANX","DEP","STRESS"))) %>% 
+  select(starts_with(c("ANX","DEP","STRESS"))) %>% 
   skim()
 ```
 
@@ -398,7 +404,7 @@ And grouped:
 
 ```{r}
 df %>% 
-  select(Group,starts_with(c("DASS","ANX","DEP","STRESS"))) %>% 
+  select(Group,starts_with(c("ANX","DEP","STRESS"))) %>% 
   group_by(Group) %>% 
   skim() %>% 
   arrange(Group) #try other sorting variables, and also try to reverse sorting
@@ -407,11 +413,8 @@ df %>%
 
 ## Correlation & visualization
 
-rework these for new dataset, first without "styling"
-
 ### Correlation matrix
 
-We'll leave DASS total scores out of this, since it contains the others.
 
 ```{r}
 df %>% 
@@ -431,10 +434,17 @@ df %>%
 
 ```
 
-### easystats `plot(cor_test())`
+### easystats
 
 Good example to slice up and see what the various parts do.
 
+```{r}
+df %>% 
+  cor_test("ANX_t0", "DEP_t0") %>% 
+  plot()
+```
+
+With some styling/theming.
 ```{r}
 df %>% 
   cor_test("ANX_t0", "DEP_t0") %>% 
@@ -461,21 +471,22 @@ Bonus points if you can get both in the same plot!
 ## Missing data
 ```{r}
 df %>% 
-  select(starts_with(c("DASS","ANX","DEP","STRESS"))) %>% 
-  vis_dat()
+  select(starts_with(c("ANX","DEP","STRESS"))) %>% 
+  vis_dat(palette = "qual")
 ```
 
+### Imputation etc?
+
+Please see <https://vincentarelbundock.github.io/marginaleffects/articles/multiple_imputation.html> for some options.
 
 ## Outliers
 
 ```{r}
 df %>% 
-  select(starts_with("DASS")) %>% 
+  select(id, starts_with(c("ANX","DEP","STRESS"))) %>% 
   na.omit() %>% 
-  check_outliers()
+  check_outliers(ID = "id")
 ```
-
-Let's look closer at that case.
 
 Should we try other methods? See `?check_outliers`.
 
@@ -498,8 +509,8 @@ For simplicity, we'll initially focus on the main outcome variables, DASS, DEP, 
 
 ```{r}
 df.long <- df %>% 
-  select(id,Group,starts_with(c("DASS","ANX","DEP","STRESS"))) %>% 
-  pivot_longer(starts_with(c("DASS","ANX","DEP","STRESS")),
+  select(id,Group,starts_with(c("ANX","DEP","STRESS"))) %>% 
+  pivot_longer(starts_with(c("ANX","DEP","STRESS")),
                names_to = c("measure", "time"),
                names_sep = "_t")
 ```
@@ -510,4 +521,157 @@ And look at the df.
 glimpse(df.long)
 ```
 
+## Bonus - dealing with questionnaire data
 
+::: {.callout-note}
+This section will mostly be skimmed and the various plots and solutions are included for you to use as a reference if/when you would like to implement something similar in your future analyses.
+:::
+
+We'll use a dataset that actually includes raw response data from SurveyMonkey.
+
+```{r}
+df2 <- read.spss("data/2023-04-26 Prevent OSA-enkat.sav", to.data.frame = T) %>% 
+  select(starts_with("q0010"))
+
+itemlabels <- read_excel("data/Itemlabels.xlsx") %>% 
+  filter(str_detect(itemnr, pattern = "ls")) %>% 
+  select(!Dimension)
+
+names(df2) <- itemlabels$itemnr
+  
+```
+
+```{r}
+glimpse(df2)
+```
+
+```{r}
+skim(df2)
+```
+
+### Ordering response categories
+
+Here is a figure with categories as they are.
+
+```{r}
+#| fig-height: 8
+df2 %>% 
+  pivot_longer(everything(),
+               values_to = "category",
+               names_to = "itemnr") %>% 
+  group_by(itemnr) %>% 
+  count(category) %>% 
+  left_join(.,itemlabels, # this adds the item description to the dataset
+            by = "itemnr") %>% 
+  ggplot(aes(x = category, y = n, fill = item)) +
+  geom_col() +
+  facet_wrap(~item, # makes a separate facet/plot for each item
+             ncol = 1) +
+  theme_ki() +
+  scale_fill_manual(values = ki_color_palette,
+                     guide = "none")
+
+```
+
+Reversing the response categories with `ggplot(aes(x = fct_rev(category)`
+
+```{r}
+#| fig-height: 8
+
+df2 %>% 
+  na.omit() %>% 
+  pivot_longer(everything(),
+               values_to = "category",
+               names_to = "itemnr") %>% 
+  group_by(itemnr) %>% 
+  count(category) %>% 
+  left_join(.,itemlabels, # this adds the item description to the dataset
+            by = "itemnr") %>% 
+  ### reverse response categories
+  ggplot(aes(x = fct_rev(category), y = n, fill = item)) +
+  geom_col() +
+  facet_wrap(~item, # makes a separate facet/plot for each item
+             ncol = 1) +
+  theme_ki() +
+  scale_fill_manual(values = ki_color_palette,
+                     guide = "none")
+```
+
+And, just for reference, manually ordering the response categories. Here, we also added the category names to each plot facet by adding `scales = "free"` to the `facet_wrap()` call. Note that this frees the y axis to vary for each facet too, which can be less desirable. This can be easily solved by adding `scale_y_continuous(limits = c(0,150))` to have all facets range from 0 to 150.
+
+```{r}
+#| fig-height: 8
+
+df2 %>% 
+  na.omit() %>% 
+  pivot_longer(everything(),
+               values_to = "category",
+               names_to = "itemnr") %>% 
+  group_by(itemnr) %>% 
+  count(category) %>% 
+  left_join(.,itemlabels, # this adds the item description to the dataset
+            by = "itemnr") %>% 
+  mutate(category = factor(category, levels = c("Aldrig","Ibland","Ganska ofta",
+                                                "Sällan","Mycket ofta","Alltid"))) %>%  ### order response categories
+  ggplot(aes(x = category, y = n, fill = item)) +
+  geom_col() +
+  facet_wrap(~item, # makes a separate facet/plot for each item
+             ncol = 1,
+             scales = "free") +
+  theme_ki() +
+  scale_fill_manual(values = ki_color_palette,
+                     guide = "none")
+```
+
+### Stacked bar plot
+
+```{r}
+df2 %>%
+  na.omit() %>%
+  pivot_longer(everything()) %>%
+  dplyr::count(name, value) %>%
+  mutate(Item = factor(name, levels = rev(names(df2))),
+         value = factor(value)) %>%
+  ggplot(aes(x = n, y = Item, fill = value)) +
+  geom_col() +
+  scale_fill_viridis_d("Category",
+                       direction = -1) +
+  labs(title = "Item responses",
+       x = "Number of responses") +
+  theme_ki()
+```
+
+### Recoding response categories to integers
+
+Using `car::recode()`
+
+```{r}
+df2.recoded <- df2 %>% 
+  mutate(across(ls1:ls6, ~ recode(.x,"'Aldrig'=0;
+                                   'Sällan'=1;
+                                   'Ibland'=2;
+                                   'Ganska ofta'=3;
+                                   'Mycket ofta'=4;
+                                   'Alltid'=5",
+                                  as.factor = FALSE)))
+  
+```
+
+
+### Tile plot
+
+```{r}
+df2.recoded %>% 
+  na.omit() %>% 
+  pivot_longer(everything()) %>%
+  dplyr::count(name, value) %>%
+  mutate(name = factor(name, levels = rev(names(df2.recoded)))) %>%
+  ggplot(aes(x = value, y = name, fill = n)) +
+  geom_tile() +
+  scale_fill_viridis_c(expression(italic(n)), limits = c(0, NA)) +
+  scale_x_continuous("Response category", expand = c(0, 0), breaks = 0:max(df2.recoded, na.rm = T)) + # change breaks to fit number of response categories
+  labs(y = "Items") +
+  theme(axis.text.x = element_text(size = 8)) +
+  geom_text(aes(label = n), colour = "orange") +
+  theme_ki()
+```

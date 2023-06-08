@@ -28,7 +28,7 @@ If you like, you can change the visual theme under the `Appearance` tab.
 Below is a list of all the packages planned for use during the course. In Rstudio, in the bottom right quadrant (under the tab "Files"), create a "New Blank File" of type "R script". Then copy & paste the code below into the new file, or just run it from the *Console* tab in Rstudio.
 
 ```
-install.packages(c("ggrepel","formattable","kableExtra","ggdist","ggside",
+install.packages(c("ggrepel","formattable","kableExtra","ggdist","ggrain",
                    "modelsummary","mice","GGally","easystats","patchwork",
                    "ggplot2","broom.mixed","nlme","lme4","psych","janitor",
                    "lubridate","skimr","car","styler","grateful","arrow","glue",
@@ -67,7 +67,7 @@ library(easystats)
 library(GGally)
 library(mice)
 library(modelsummary)
-library(ggside)
+library(ggrain)
 library(ggdist)
 library(kableExtra)
 library(formattable)

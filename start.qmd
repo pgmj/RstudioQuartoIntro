@@ -23,7 +23,6 @@ format:
     page-layout: full
     mainfont: 'Arial'
     code-overflow: wrap
-    code-tools: true
     code-fold: show
     code-link: true
     number-sections: true
@@ -211,12 +210,15 @@ df2 <- read.spss("path/to/spssfile.sav", to.data.frame = TRUE)
 
 ### Keyboard shortcuts {.smaller}
 
--   **TAB-completion** TAB-tangenten har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil.
--   **CTRL+enter** Kör kodraden du har markören på (och hoppar ner till nästa). Om du har ett block med flera rader av tidy-kod som hålls samman med pipe-symbolen `%\>%` som radbrytning, eller ggplot-kod (som hålls samman med `+`) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
+-   **TAB** TAB-tangenten (ovanför CAPS LOCK) har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil. "TAB-completion"
+-   **CTRL+enter**
+  - Kör kodraden du har markören på (och hoppar ner till nästa). 
+  - Kör koden du har markerat.
+  - Om du har ett block med flera rader av tidy-kod (som hålls samman med pipe-symbolen `%>%`) eller ggplot (som hålls samman med `+`) så spelar det ingen roll var bland raderna markören är, hela blocket körs ändå
 -   **CTRL+SHIFT+enter** Kör en hel code chunk i Quarto. Spelar ingen roll var i chunken du har markören.
--   **CTRL+SHIFT+m** Skapar en pipe-symbol
--   **CTRL+ALT(option)+i** Skapar en ny code chunk i Quarto
--   **CTRL/CMD+SHIFT+c** Kommentera bort/in alla rader som är markerade
+-   **CTRL+SHIFT+m** Skapar en pipe-symbol (`%>%` eller `|>` beroende på vad du valt i Rstudio).
+-   **CTRL+ALT(option)+i** Skapar en ny code chunk i Quarto.
+-   **CTRL/CMD+SHIFT+c** Kommentera bort/in alla rader som är markerade.
 
 ## Intro done
 

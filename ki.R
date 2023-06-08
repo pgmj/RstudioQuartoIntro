@@ -9,12 +9,12 @@ ki_color_palette_labelled <- c("Mörk plommon" = "#4F0433",
 
 ki_color_palette <- c("#4F0433",
                       "#FF876F",
-                      "#FEEEEB",
-                      "#EDF4F4",
                       "#870052",
                       "#B84145",
                       "#002C34",
-                      "#4DB5BC")
+                      "#4DB5BC",
+                      "#FEEEEB",
+                      "#EDF4F4")
 
 # DM Sans
 library(showtext)
