@@ -1,5 +1,5 @@
 ---
-title: "Data import & descriptives"
+title: "Data analysis"
 title-block-banner: "#870052"
 title-block-banner-color: "#FFFFFF"
 author: 
@@ -46,12 +46,19 @@ editor_options:
 
 ## Overview of this file
 
-- Visualizing distributions
-- Running models
-- Checking assumptions
-- Effects(?)
+-   Visualizing distributions
+-   Running models
+-   Checking assumptions
+-   Effects(?)
 
 ### Setting up
+
+Read data.
+
+```{r}
+df.long <- read.csv("dataLong.csv")
+```
+
 
 Let's load packages/libraries.
 
@@ -97,7 +104,6 @@ Define a ggplot theme `theme_ki()`, a standard table function, `kbl_ki()`, and a
 #| code-fold: show
 source("ki.R") # this reads an external file and loads whatever is in it
 ```
-
 
 ## Visualizations
 
@@ -186,7 +192,6 @@ df.long %>%
        y = "Distribution of outcome measurements")
 ```
 
-
 ### Individuals over time
 
 Using the package `ggrain` we can get this sweet figure that combines a boxplot, a split violin plot, jittered points for individuals, and lines between individuals over time!
@@ -204,7 +209,8 @@ df.long %>%
                     aesthetics = c("color","fill")) +
   theme_ki() +
   facet_wrap(~Group,
-             nrow = 2)
+             nrow = 2) +
+  labs(title = "Depression over time")
 ```
 
 ```{r}
@@ -220,61 +226,72 @@ df.long %>%
                     aesthetics = c("color","fill")) +
   theme_ki() +
   facet_wrap(~Group,
-             nrow = 2)
+             nrow = 2) +
+  labs(title = "Depression over time")
 ```
 
-## Linear model
+## Linear model 1
 
 We will start with DEP as outcome and fit a simple linear model. But first, we'll split our `measure` variable into three separate variables (while retaining `time` as its own variable).
 
 ```{r}
 df.model <- df.long %>% 
   pivot_wider(names_from = "measure",
-              values_from = "value")
+              values_from = "value") %>% 
+  rename(Depression = DEP,
+         Anxiety = ANX,
+         Stress = STRESS) %>% 
+  mutate(time = as.integer(time))
 ```
-
 
 ```{r}
 m1 <- lmer(data = df.model,
-         DEP ~ time + Group + time*Group + (1 | id),
+         Depression ~ time + Group + time*Group + (1 | id),
          REML = TRUE)
 ```
 
 ### Table
+
 ```{r}
-tbl_regression(m1)
 sjPlot::tab_model(m1)
 ```
 
-
 ```{r}
-summary(m1)
 tidy(m1)
 glance(m1)
-ICC(m1)
 ```
 
-summary 
-glance 
-tidy 
-tbl_
-tab_model?
+### Predicted response
 
 ```{r}
-pred2 <- estimate_expectation(m2, data = "grid")
-plot(pred2) +
-  scale_x_continuous(breaks = c(0,1)) +
-  theme_minimal() +
-  theme_rise()
-plot(parameters(m2))
+estimate_expectation(m1, data = "grid") %>% 
+  plot() +
+  theme_ki()
+```
+
+### Plot parameters
+
+```{r}
+plot(parameters(m1))
 ```
 
 ### Check assumptions
 
+```{r}
+#| fig-height: 8
+check_model(m1)
+```
 
+## Linear model 2
+
+What happens if we define time as a factor?
+
+
+
+## Marginal effects
+
+![https://twitter.com/stephenjwild/status/1666056019993034755](images/marginaleffects.jpg)
 
 link to `marginaleffects`!
 
-meme
 
-https://twitter.com/stephenjwild/status/1666056019993034755

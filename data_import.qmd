@@ -521,6 +521,15 @@ And look at the df.
 glimpse(df.long)
 ```
 
+## Done!
+
+We'll write `df.long` to file for use in analysis (soon).
+
+```{r}
+write.csv(df.long,"dataLong.csv")
+```
+
+
 ## Bonus - dealing with questionnaire data
 
 ::: {.callout-note}
