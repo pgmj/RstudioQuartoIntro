@@ -88,6 +88,7 @@ library(kableExtra)
 library(formattable)
 library(ggrepel)
 library(ggrain)
+library(sjPlot)
 ```
 
 Define a ggplot theme `theme_ki()`, a standard table function, `kbl_ki()`, and a color palette based on KI's design guide, `ki_color_palette`.
@@ -111,7 +112,23 @@ df.long %>%
   geom_histogram(binwidth = 4) +
   facet_grid(measure~time) +
   theme_ki() +
-  scale_fill_manual(values = ki_color_palette)
+  scale_fill_manual(values = ki_color_palette) +
+  labs(title = "Outcomes over time",
+       subtitle = "Control group",
+       x = "",
+       y = "Number of respondents")
+
+df.long %>% 
+  filter(!Group == "Control") %>% 
+  ggplot(aes(x = value, fill = measure)) +
+  geom_histogram(binwidth = 4) +
+  facet_grid(measure~time) +
+  theme_ki() +
+  scale_fill_manual(values = ki_color_palette) +
+  labs(title = "Outcomes over time",
+       subtitle = "Intervention group",
+       x = "",
+       y = "Number of respondents")
 
 ```
 
@@ -124,12 +141,55 @@ df.long %>%
   geom_density() +
   facet_grid(measure~time) +
   theme_ki() +
-  scale_fill_manual(values = ki_color_palette)
+  scale_fill_manual(values = ki_color_palette) +
+  labs(title = "Outcomes over time",
+       subtitle = "Control group",
+       x = "",
+       y = "Density of respondents")
+
+df.long %>% 
+  filter(!Group == "Control") %>% 
+  ggplot(aes(x = value, fill = measure)) +
+  geom_density() +
+  facet_grid(measure~time) +
+  theme_ki() +
+  scale_fill_manual(values = ki_color_palette) +
+  labs(title = "Outcomes over time",
+       subtitle = "Intervention group",
+       x = "",
+       y = "Density of respondents")
 ```
 
 What do these distributions look like to you? Normal?
 
+We'll get back to what this means for our analysis.
+
+#### Box + violin
+
+```{r}
+#| fig-height: 7
+
+df.long %>% 
+  ggplot(aes(x = time, y = value, fill = Group)) +
+  geom_violin(position = position_dodge(0.9),
+              alpha = 0.9) +
+  geom_boxplot(position = position_dodge(0.9),
+               width = .2,
+               notch = TRUE,
+               outlier.shape = NA,
+               alpha = 0.3) +
+  facet_wrap(~measure,
+             ncol = 1) +
+  theme_ki() +
+  labs(title = "Outcomes over time",
+       x = "Time point",
+       y = "Distribution of outcome measurements")
+```
+
+
 ### Individuals over time
+
+Using the package `ggrain` we can get this sweet figure that combines a boxplot, a split violin plot, jittered points for individuals, and lines between individuals over time!
 
 ```{r}
 df.long %>%
@@ -147,8 +207,52 @@ df.long %>%
              nrow = 2)
 ```
 
+```{r}
+df.long %>%
+  filter(measure == "DEP") %>% 
+  ggplot(aes(x = time, y = value, group = time, fill = Group, color = Group)) +
+  geom_rain(
+    #alpha = .6,
+    boxplot.args = list(color = "black", outlier.shape = NA),
+    id.long.var = "id"
+  ) +
+  scale_fill_brewer(palette = "Dark2",
+                    aesthetics = c("color","fill")) +
+  theme_ki() +
+  facet_wrap(~Group,
+             nrow = 2)
+```
 
 ## Linear model
+
+We will start with DEP as outcome and fit a simple linear model. But first, we'll split our `measure` variable into three separate variables (while retaining `time` as its own variable).
+
+```{r}
+df.model <- df.long %>% 
+  pivot_wider(names_from = "measure",
+              values_from = "value")
+```
+
+
+```{r}
+m1 <- lmer(data = df.model,
+         DEP ~ time + Group + time*Group + (1 | id),
+         REML = TRUE)
+```
+
+### Table
+```{r}
+tbl_regression(m1)
+sjPlot::tab_model(m1)
+```
+
+
+```{r}
+summary(m1)
+tidy(m1)
+glance(m1)
+ICC(m1)
+```
 
 summary 
 glance 
