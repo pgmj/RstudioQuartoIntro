@@ -475,21 +475,26 @@ This function autogenerates text describing the model output.
 report(m1)
 ```
 
-## Linear model 2
+## More linear models...
 
 What happens if we define time as a factor and add time point 3?
 
-## Other possible additional models
+### Other possible additional models
 
 Add random slopes?
 
-Control for pre-measurement?
-
+Add pre-measurement covariate?
 
 ## Marginal effects
 
 ![https://twitter.com/stephenjwild/status/1666056019993034755](images/marginaleffects.jpg)
 
-link to `marginaleffects`!
+This package is really great and has nice documentation:
+<https://vincentarelbundock.github.io/marginaleffects/>
 
+## Generalized Linear Models
+
+This series of blog posts on GLM's and causal inference is awesome:
+
+<https://solomonkurz.netlify.app/blog/2023-04-12-boost-your-power-with-baseline-covariates/>
 

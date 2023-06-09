@@ -10,7 +10,7 @@ Install R (you need version 4.1 or later) for your platform:
 
 Install the latest version of Rstudio, which includes Quarto 1.2: - <https://posit.co/download/rstudio-desktop/>
 
-> **Note:** If you have an older version of R (not Rstudio) and need to upgrade, you may find that the easiest way is to uninstall R and reinstall >everything including packages from scratch. Unfortunately, it is not sufficient to use the regular uninstall functions, but you will find instructions on >removal here: https://www.delftstack.com/howto/r/uninstall-r-and-all-its-packages-on-windows/
+> **Note:** If you have an older version of R (not Rstudio) and need to upgrade, you may find that the easiest way is to uninstall R and reinstall everything including packages from scratch. Unfortunately, it is not sufficient to use the regular uninstall functions, but you will find instructions on removal here: https://www.delftstack.com/howto/r/uninstall-r-and-all-its-packages-on-windows/
 
 
 ### Rstudio settings
