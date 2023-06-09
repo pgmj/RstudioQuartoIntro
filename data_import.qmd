@@ -537,7 +537,7 @@ glimpse(df.long)
 We'll write `df.long` to file for use in analysis (soon).
 
 ```{r}
-write.csv(df.long,"dataLong.csv")
+write.csv(df.long,"data/dataLong.csv")
 ```
 
 

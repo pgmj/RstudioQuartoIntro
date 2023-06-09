@@ -55,7 +55,7 @@ editor_options:
 Read the data that we prepared previously.
 
 ```{r}
-df.long <- read.csv("dataLong.csv")
+df.long <- read.csv("data/dataLong.csv")
 ```
 
 
@@ -192,14 +192,15 @@ What do these distributions look like to you?
 #| code-fold: true
 
 df.long %>% 
+  mutate(time = as.factor(time)) %>% 
   ggplot(aes(x = time, y = value, fill = Group)) +
   geom_violin(position = position_dodge(0.9),
               alpha = 0.9) +
   geom_boxplot(position = position_dodge(0.9),
+               color = "white",
                width = .2,
                notch = TRUE,
-               outlier.shape = NA,
-               alpha = 0.3) +
+               outlier.shape = NA) +
   facet_wrap(~measure,
              ncol = 1) +
   theme_ki() +
@@ -208,11 +209,12 @@ df.long %>%
        y = "Distribution of outcome measurements")
 ```
 
-Linear effect?
+Notice the notch in the boxplot. This is from the documentation (`?geom_boxplot`):
+> If FALSE (default) make a standard box plot. If TRUE, make a notched box plot. Notches are used to compare groups; **if the notches of two boxes do not overlap, this suggests that the medians are significantly different**.
 
 ### Individuals over time
 
-Using the package `ggrain` we can get this sweet figure that combines a boxplot, a split violin plot, jittered points for individuals, and lines between individuals over time!
+Using the package `ggrain` we can get this sweet figure that combines a boxplot, a half/split violin plot, jittered points for individuals, and lines between individuals across time points!
 
 ```{r}
 #| code-fold: true
@@ -334,6 +336,8 @@ df.long %>%
 
 We will start with DEP as outcome and fit a linear model. 
 
+### Data wrangling
+
 First, we'll split our `measure` variable into three separate variables (while retaining `time` as its own variable), using `pivot_wider()`.
 
 Second, we'll remove the last time point in this first model, in order to make our data fit a linear model better.
@@ -351,6 +355,8 @@ df.model1 <- df.long %>%
   mutate(time = as.integer(time))
 ```
 
+### Model specification
+
 Now we can specify and fit a model:
 
 ```{r}
@@ -366,18 +372,20 @@ Can you decipher the syntax (before looking below)?
 
 ### Syntax for `lmer`
 
->The general trick is that the formula follows the form `dependent ~ independent | grouping`. 
+>The general trick is that the formula follows the form 
+> - `dependent ~ independent | grouping`. 
 >The grouping is generally a random factor, you can include fixed factors without any grouping and you can have additional random factors without any fixed factor (an intercept-only model). 
 >A `+` between factors indicates no interaction, a `*` indicates interaction.
 
 >For random factors, you have three basic variants:
 
-> - Intercepts only by random factor: (1 | random.factor)
-> - Slopes only by random factor: (0 + fixed.factor | random.factor)
-> - Intercepts and slopes by random factor: (1 + fixed.factor | random.factor)
+> - Intercepts only by random factor: `(1 | random.factor)`
+> - Slopes only by random factor: `(0 + fixed.factor | random.factor)`
+> - Intercepts and slopes by random factor: `(1 + fixed.factor | random.factor)`
+
 >Note that variant 3 has the slope and the intercept calculated in the same grouping, i.e. at the same time. If we want the slope and the intercept calculated independently, i.e. without any assumed correlation between the two, we need a fourth variant:
 
->Intercept and slope, separately, by random factor: (1 | random.factor) + (0 + fixed.factor | random.factor). An alternative way to write this is using the double-bar notation fixed.factor + (fixed.factor || random.factor).
+>Intercept and slope, separately, by random factor: `(1 | random.factor) + (0 + fixed.factor | random.factor)`. An alternative way to write this is using the double-bar notation `fixed.factor + (fixed.factor || random.factor)`.
 
 Reference links for formulas:
 
