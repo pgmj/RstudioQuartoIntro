@@ -16,7 +16,7 @@ format:
     standalone: true
     mainfont: 'Arial'
     code-overflow: wrap
-    code-fold: true
+    code-fold: show
     code-link: true
     number-sections: true
     fig-dpi: 96
@@ -102,7 +102,7 @@ library(GGally)
 
 ```
 
-Define a ggplot theme `theme_ki()` and standard table function, `kbl_ki()`.
+Define a ggplot theme `theme_ki()`, a standard table function, `kbl_ki()`, and a color palette based on KI's design guide, `ki_color_palette`.
 
 ```{r}
 #| code-fold: show
@@ -246,12 +246,12 @@ age.ttest <- t.test(age ~ Group, data = df)
 age.ttest
 ```
 
-
 ```{r}
 tidy(age.ttest) %>% 
   mutate_if(is.double, round, digits = 2) %>% 
   kbl_ki()
 ```
+
 :::
 
 
@@ -297,13 +297,13 @@ df %>%
 ```
 
 ::: {.callout-tip}
-#### Practice
+#### Practice 
 
-Now make a new separate plot for the intervention group.
+- Make a new plot for intervention group age.
 :::
 
 
-### filter/select
+### tidy filter/select
 
 ::: {.callout-note}
 Two key things to learn:
@@ -312,6 +312,7 @@ Two key things to learn:
 - `select()` works on columns, based on their names
 :::
 
+#### Examples
 
 This filters for inclusion of only one municipality:
 ``` r
@@ -332,8 +333,8 @@ We can have both in the same plot.
 - dynamic color/fill (based on a data variable) needs to be defined within the `aes()` function (aesthetics).
 
 ```{r}
-ggplot(df,
-       aes(x = age, fill = Group)) +
+df %>% 
+  ggplot(aes(x = age, fill = Group)) +
   geom_histogram(color = "black") +
   labs(title = "Histogram of participant age",
        x = "Age",
@@ -348,8 +349,8 @@ ggplot(df,
 Or we can use `facet_wrap()` to make parallel plots.
 ```{r}
 #| fig-height: 4
-ggplot(df,
-       aes(x = age, fill = Group)) +
+df %>% 
+  ggplot(aes(x = age, fill = Group)) +
   geom_histogram(color = "white",
                  binwidth = 3) +
   labs(title = "Histogram of participant age",
@@ -363,6 +364,12 @@ ggplot(df,
   facet_wrap(~Group,
              ncol = 2)
 ```
+
+::: {.callout-tip}
+#### Practice 
+
+- Plot age grouped by gender (bonus: facet_wrap by Group)
+:::
 
 ## Variable names
 
@@ -422,7 +429,7 @@ df %>%
   ggpairs()
 ```
 
-With grouping by gender.
+### Correlation grouped
 
 ```{r}
 df %>% 
@@ -436,7 +443,9 @@ df %>%
 
 ### easystats
 
-Good example to slice up and see what the various parts do.
+::: {.callout-note}
+From here, we will practice to "break down" the pieces in the tidy/ggplot code by selecting pieces of it and running it, adding one row/function/layour at a time.
+:::
 
 ```{r}
 df %>% 
@@ -479,6 +488,8 @@ df %>%
 
 Please see <https://vincentarelbundock.github.io/marginaleffects/articles/multiple_imputation.html> for some options.
 
+And notes on missing data and LMM's: <https://rpsychologist.com/lmm-slope-missingness>
+
 ## Outliers
 
 ```{r}
@@ -505,7 +516,7 @@ df %>%
   names()
 ```
 
-For simplicity, we'll initially focus on the main outcome variables, DASS, DEP, ANX, and STRESS. Let's pivot the data to long format.
+For simplicity, we'll initially focus on the main outcome variables, DEP, ANX, and STRESS. Let's pivot the data to long format.
 
 ```{r}
 df.long <- df %>% 
@@ -533,7 +544,7 @@ write.csv(df.long,"dataLong.csv")
 ## Bonus - dealing with questionnaire data
 
 ::: {.callout-note}
-This section will mostly be skimmed and the various plots and solutions are included for you to use as a reference if/when you would like to implement something similar in your future analyses.
+This section will mostly be skimmed and the various plots and solutions are included for you to use as a reference if/when you would like to implement something similar in your future analyses. We can also go back to this section if we have time at the end.
 :::
 
 We'll use a dataset that actually includes raw response data from SurveyMonkey.
@@ -688,7 +699,8 @@ df2.recoded %>%
 
 ## Exercise?
 
-Plot/table of age+gender for df2's spss file. Start with:
+Plot/table of age+gender for df2's spss data. Start with importing the whole dataset and figure out which variables are age and gender.
+
 ```
 df3 <- read.spss("data/2023-04-26 Prevent OSA-enkat.sav", to.data.frame = T)
 ```

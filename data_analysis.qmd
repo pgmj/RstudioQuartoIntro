@@ -11,7 +11,6 @@ date: 2023-06-12
 date-format: YYYY-MM-DD
 format: 
   html:
-    
     toc: true
     embed-resources: true
     standalone: true
@@ -53,7 +52,7 @@ editor_options:
 
 ### Setting up
 
-Read data.
+Read the data that we prepared previously.
 
 ```{r}
 df.long <- read.csv("dataLong.csv")
@@ -110,6 +109,7 @@ source("ki.R") # this reads an external file and loads whatever is in it
 ### Histogram
 
 ```{r}
+#| code-fold: true
 df.long %>% 
   filter(Group == "Control") %>% 
   ggplot(aes(x = value, fill = measure)) +
@@ -139,6 +139,8 @@ df.long %>%
 ### Density
 
 ```{r}
+#| code-fold: true
+
 df.long %>% 
   filter(Group == "Control") %>% 
   ggplot(aes(x = value, fill = measure)) +
@@ -167,6 +169,8 @@ df.long %>%
 ### stat_halfeye
 
 ```{r}
+#| code-fold: true
+
 df.long %>% 
   filter(measure == "DEP") %>% 
   ggplot(aes(x = value, fill = Group)) +
@@ -185,6 +189,7 @@ What do these distributions look like to you?
 
 ```{r}
 #| fig-height: 7
+#| code-fold: true
 
 df.long %>% 
   ggplot(aes(x = time, y = value, fill = Group)) +
@@ -210,6 +215,9 @@ Linear effect?
 Using the package `ggrain` we can get this sweet figure that combines a boxplot, a split violin plot, jittered points for individuals, and lines between individuals over time!
 
 ```{r}
+#| code-fold: true
+#| fig-height: 7
+
 df.long %>%
   filter(measure == "DEP") %>% 
   ggplot(aes(x = time, y = value, group = time, fill = Group, color = Group)) +
@@ -228,6 +236,9 @@ df.long %>%
 And a slightly different version - can you see what is different and how it relates to the code?
 
 ```{r}
+#| code-fold: true
+#| fig-height: 7
+
 df.long %>%
   filter(measure == "DEP") %>% 
   ggplot(aes(x = time, y = value, group = time, fill = Group, color = factor(id))) +
@@ -249,6 +260,7 @@ df.long %>%
 ```{r}
 #| label: fig-depMeanSD
 #| fig-cap: "Depression over time by group"
+#| code-fold: true
 
 df.long %>%
   filter(measure == "DEP") %>% 
@@ -277,6 +289,8 @@ df.long %>%
 #### Error-bar
 
 ```{r}
+#| code-fold: true
+
 df.long %>%
   filter(measure == "DEP") %>%
   group_by(time, Group) %>%
@@ -318,10 +332,17 @@ df.long %>%
 
 ## Linear model 1
 
-We will start with DEP as outcome and fit a linear model. But first, we'll split our `measure` variable into three separate variables (while retaining `time` as its own variable), using `pivot_wider()`.
+We will start with DEP as outcome and fit a linear model. 
+
+First, we'll split our `measure` variable into three separate variables (while retaining `time` as its own variable), using `pivot_wider()`.
+
+Second, we'll remove the last time point in this first model, in order to make our data fit a linear model better.
+
+Both of these transformations are made in the code chunk below.
 
 ```{r}
-df.model <- df.long %>% 
+df.model1 <- df.long %>% 
+  filter(!time == "3") %>% # since time is a character variable in df.long we need ""
   pivot_wider(names_from = "measure",
               values_from = "value") %>% 
   rename(Depression = DEP,
@@ -330,50 +351,81 @@ df.model <- df.long %>%
   mutate(time = as.integer(time))
 ```
 
-Now we can specify a model:
+Now we can specify and fit a model:
 
 ```{r}
-m1 <- lmer(data = df.model,
+m1 <- lmer(data = df.model1,
          Depression ~ time + Group + time*Group + (1 | id),
          REML = TRUE)
 ```
 
 ::: {.callout-tip}
 ### Exercise
-Can you decipher the syntax?
+Can you decipher the syntax (before looking below)?
 :::
+
+### Syntax for `lmer`
+
+>The general trick is that the formula follows the form `dependent ~ independent | grouping`. 
+>The grouping is generally a random factor, you can include fixed factors without any grouping and you can have additional random factors without any fixed factor (an intercept-only model). 
+>A `+` between factors indicates no interaction, a `*` indicates interaction.
+
+>For random factors, you have three basic variants:
+
+> - Intercepts only by random factor: (1 | random.factor)
+> - Slopes only by random factor: (0 + fixed.factor | random.factor)
+> - Intercepts and slopes by random factor: (1 + fixed.factor | random.factor)
+>Note that variant 3 has the slope and the intercept calculated in the same grouping, i.e. at the same time. If we want the slope and the intercept calculated independently, i.e. without any assumed correlation between the two, we need a fourth variant:
+
+>Intercept and slope, separately, by random factor: (1 | random.factor) + (0 + fixed.factor | random.factor). An alternative way to write this is using the double-bar notation fixed.factor + (fixed.factor || random.factor).
+
+Reference links for formulas:
+
+- <https://stats.stackexchange.com/questions/13166/rs-lmer-cheat-sheet>
+- <https://rpsychologist.com/r-guide-longitudinal-lme-lmer>
+
 ### Check assumptions
 
+Our linear mixed model makes a lot of assumptions about the structure of data. It is important that we investigate this before looking at the output of the model, which may be entirely misleading if assumptions are not met.
+
+::: {.column-page-inset-left}
 ```{r}
-#| fig-height: 8
+#| fig-height: 9
+#| fig-width: 10
 check_model(m1)
 ```
+:::
 
-### Table
+### Table with results
 
 ```{r}
 #| label: tbl-model1
 #| tbl-cap: 'Linear Mixed Model 1 summary statistics'
-sjPlot::tab_model(m1)
+tab_model(m1)
 ```
 See <https://cran.r-project.org/web/packages/sjPlot/vignettes/tab_model_estimates.html> for more details on generating tables with `sjPlot` functions. One drawback with this package is that it only generates HTML-tables, which don't work well with PDF and Word output formats.
+
+#### gtsummary
 
 An alternative is `gtsummary`, which is more flexible regarding the output, but may need a bit more work. See <https://www.danieldsjoberg.com/gtsummary/index.html> for examples.
 
 ```{r}
 #| label: tbl-model2
 #| tbl-cap: 'Linear Mixed Model 1 summary statistics'
-gtsummary::tbl_regression(m1) %>% 
-  add_p()
+tbl_regression(m1)
 ```
 
-You can also get "raw" output to format by yourself.
+#### summary
+
+You can also get "raw" output.
 
 ```{r}
 summary(m1)
 ```
 
-More friendly formatted to create a simple table.
+#### tidy
+
+More friendly formatted with `tidy()` makes it easy to create a simple table.
 
 ```{r}
 tidy(m1) %>% 
@@ -381,12 +433,19 @@ tidy(m1) %>%
   kbl_ki() # note that this function is specified in the file "ki.R"
 ```
 
+#### glance
+
 And some additional summary stats.
 ```{r}
-glance(m1)
+glance(m1) %>% 
+  kbl_ki()
 ```
 
-### Predicted response
+### Figures
+
+#### Predicted response
+
+This uses functions from [easystats](https://easystats.github.io/easystats/). You can look at the link for other examples.
 
 ```{r}
 estimate_expectation(m1, data = "grid") %>% 
@@ -394,19 +453,29 @@ estimate_expectation(m1, data = "grid") %>%
   theme_ki()
 ```
 
-### Plot parameters
+#### Plot parameters
 
 ```{r}
 plot(parameters(m1))
 ```
 
+### Report
+
+This function autogenerates text describing the model output.
+
+```{r}
+report(m1)
+```
+
 ## Linear model 2
 
-What happens if we define time as a factor?
+What happens if we define time as a factor and add time point 3?
 
-## Linear model 3
+## Other possible additional models
 
-With random slopes?
+Add random slopes?
+
+Control for pre-measurement?
 
 
 ## Marginal effects
