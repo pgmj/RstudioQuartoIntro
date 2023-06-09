@@ -18,8 +18,12 @@ ki_color_palette <- c("#4F0433",
 
 # DM Sans
 library(showtext)
-## Loading Google fonts (https://fonts.google.com/)
-font_add_google("DM Sans")
+## Load Google fonts from the web (https://fonts.google.com/)
+#font_add_google("DM Sans")
+## Load downloaded Google font to avoid dependence on internet access
+font_add("DM Sans", "materials/DM_Sans/DMSans-Regular.ttf",
+         bold = "materials/DM_Sans/DMSans-Bold.ttf",
+         italic = "materials/DM_Sans/DMSans-Italic.ttf")
 ## Automatically use showtext to render text
 showtext_auto()
 
@@ -31,7 +35,7 @@ theme_ki <- function(fontfamily = "DM Sans", axisSize = 13, titleSize = 15, subt
       text = element_text(family = fontfamily),
       plot.title = element_text(
         family = fontfamily,
-        size = titleSize
+        size = titleSize,
       ),
       plot.subtitle = element_text(
         family = fontfamily,
@@ -64,7 +68,7 @@ theme_ki <- function(fontfamily = "DM Sans", axisSize = 13, titleSize = 15, subt
     )
 }
 
-### Add this line to a ggplot to get KI colors:
+### Add this line to a ggplot to get KI color and fill:
 # + scale_color_manual(aesthetics = c("fill","color"), values = ki_color_palette)
 
 ### These rows are optional for changing fonts for geom_text() and geom_text_repel(),
