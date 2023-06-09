@@ -107,9 +107,7 @@ source("ki.R") # this reads an external file and loads whatever is in it
 
 ## Visualizations
 
-### Distributions
-
-#### Histogram
+### Histogram
 
 ```{r}
 df.long %>% 
@@ -138,7 +136,7 @@ df.long %>%
 
 ```
 
-#### Density
+### Density
 
 ```{r}
 df.long %>% 
@@ -166,11 +164,24 @@ df.long %>%
        y = "Density of respondents")
 ```
 
-What do these distributions look like to you? Normal?
+### stat_halfeye
 
-We'll get back to what this means for our analysis.
+```{r}
+df.long %>% 
+  filter(measure == "DEP") %>% 
+  ggplot(aes(x = value, fill = Group)) +
+  stat_halfeye() +
+  facet_grid(Group~time) +
+  theme_ki() +
+  #scale_fill_manual(values = ki_color_palette) +
+  labs(title = "Depression outcomes over time",
+       x = "",
+       y = "Density of respondents")
+```
 
-#### Box + violin
+What do these distributions look like to you?
+
+### Box + violin
 
 ```{r}
 #| fig-height: 7
@@ -192,6 +203,8 @@ df.long %>%
        y = "Distribution of outcome measurements")
 ```
 
+Linear effect?
+
 ### Individuals over time
 
 Using the package `ggrain` we can get this sweet figure that combines a boxplot, a split violin plot, jittered points for individuals, and lines between individuals over time!
@@ -201,7 +214,6 @@ df.long %>%
   filter(measure == "DEP") %>% 
   ggplot(aes(x = time, y = value, group = time, fill = Group, color = Group)) +
   geom_rain(
-    #alpha = .6,
     boxplot.args = list(color = "black", outlier.shape = NA),
     id.long.var = "id"
   ) +
@@ -212,27 +224,101 @@ df.long %>%
              nrow = 2) +
   labs(title = "Depression over time")
 ```
+
+And a slightly different version - can you see what is different and how it relates to the code?
 
 ```{r}
 df.long %>%
   filter(measure == "DEP") %>% 
-  ggplot(aes(x = time, y = value, group = time, fill = Group, color = Group)) +
+  ggplot(aes(x = time, y = value, group = time, fill = Group, color = factor(id))) +
   geom_rain(
-    #alpha = .6,
+    alpha = .6,
     boxplot.args = list(color = "black", outlier.shape = NA),
     id.long.var = "id"
   ) +
-  scale_fill_brewer(palette = "Dark2",
-                    aesthetics = c("color","fill")) +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_color_viridis_d(guide = "none") +
   theme_ki() +
   facet_wrap(~Group,
              nrow = 2) +
   labs(title = "Depression over time")
 ```
 
+### Mean+SD
+
+```{r}
+#| label: fig-depMeanSD
+#| fig-cap: "Depression over time by group"
+
+df.long %>%
+  filter(measure == "DEP") %>% 
+  group_by(time,Group) %>% 
+  reframe(Mean = mean(value, na.rm = T),
+          SD = sd(value, na.rm = T)) %>% 
+  ggplot(aes(x = time, 
+             y = Mean, 
+             group = Group, 
+             color = Group)) +
+  geom_point(size = 3) +
+  geom_line(linewidth = 1.3) +
+  theme_ki() +
+  scale_y_continuous(limits = c(0,42)) +
+  geom_ribbon(aes(ymin = Mean-SD,
+                  ymax = Mean+SD,
+                  fill = Group),
+              alpha = 0.1,
+              linetype = 0) +
+  labs(y = "Mean Depression Score",
+       x = "Time point",
+       caption = "Note. Shaded area indicates one standard deviation.") +
+  theme(plot.caption = element_text(hjust = 0))
+```
+
+#### Error-bar
+
+```{r}
+df.long %>%
+  filter(measure == "DEP") %>%
+  group_by(time, Group) %>%
+  reframe(
+    Mean = mean(value, na.rm = T),
+    SD = sd(value, na.rm = T)
+  ) %>%
+  ggplot(aes(
+    x = time,
+    y = Mean,
+    group = Group,
+    color = Group
+  )) +
+  geom_point(
+    size = 3,
+    position = position_dodge(.5)
+  ) +
+  geom_line(
+    linewidth = 1.3,
+    position = position_dodge(.5)
+  ) +
+  theme_ki() +
+  scale_y_continuous(limits = c(0, 42)) +
+  geom_errorbar(
+    aes(
+      ymin = Mean - SD,
+      ymax = Mean + SD
+    ),
+    position = position_dodge(.5), width = .2
+  ) +
+  labs( # title = "Depression over time by group",
+    y = "Mean Depression Score",
+    x = "Time point",
+    caption = "Note. Error bars indicate one standard deviation."
+  ) +
+  theme(plot.caption = element_text(hjust = 0))
+```
+
+
 ## Linear model 1
 
-We will start with DEP as outcome and fit a simple linear model. But first, we'll split our `measure` variable into three separate variables (while retaining `time` as its own variable).
+We will start with DEP as outcome and fit a linear model. But first, we'll split our `measure` variable into three separate variables (while retaining `time` as its own variable), using `pivot_wider()`.
 
 ```{r}
 df.model <- df.long %>% 
@@ -244,20 +330,59 @@ df.model <- df.long %>%
   mutate(time = as.integer(time))
 ```
 
+Now we can specify a model:
+
 ```{r}
 m1 <- lmer(data = df.model,
          Depression ~ time + Group + time*Group + (1 | id),
          REML = TRUE)
 ```
 
+::: {.callout-tip}
+### Exercise
+Can you decipher the syntax?
+:::
+### Check assumptions
+
+```{r}
+#| fig-height: 8
+check_model(m1)
+```
+
 ### Table
 
 ```{r}
+#| label: tbl-model1
+#| tbl-cap: 'Linear Mixed Model 1 summary statistics'
 sjPlot::tab_model(m1)
 ```
+See <https://cran.r-project.org/web/packages/sjPlot/vignettes/tab_model_estimates.html> for more details on generating tables with `sjPlot` functions. One drawback with this package is that it only generates HTML-tables, which don't work well with PDF and Word output formats.
+
+An alternative is `gtsummary`, which is more flexible regarding the output, but may need a bit more work. See <https://www.danieldsjoberg.com/gtsummary/index.html> for examples.
 
 ```{r}
-tidy(m1)
+#| label: tbl-model2
+#| tbl-cap: 'Linear Mixed Model 1 summary statistics'
+gtsummary::tbl_regression(m1) %>% 
+  add_p()
+```
+
+You can also get "raw" output to format by yourself.
+
+```{r}
+summary(m1)
+```
+
+More friendly formatted to create a simple table.
+
+```{r}
+tidy(m1) %>% 
+  mutate_if(is.numeric, round, 2) %>% 
+  kbl_ki() # note that this function is specified in the file "ki.R"
+```
+
+And some additional summary stats.
+```{r}
 glance(m1)
 ```
 
@@ -275,17 +400,13 @@ estimate_expectation(m1, data = "grid") %>%
 plot(parameters(m1))
 ```
 
-### Check assumptions
-
-```{r}
-#| fig-height: 8
-check_model(m1)
-```
-
 ## Linear model 2
 
 What happens if we define time as a factor?
 
+## Linear model 3
+
+With random slopes?
 
 
 ## Marginal effects

@@ -8,9 +8,7 @@ Install R (you need version 4.1 or later) for your platform:
 - Mac: <https://ftp.acc.umu.se/mirror/CRAN/bin/macosx/> 
 - Others, see: <https://ftp.acc.umu.se/mirror/CRAN/>
 
-Install the latest version of Rstudio, which should include Quarto 1.2: - <https://posit.co/download/rstudio-desktop/>
-
-Then check that you have Quarto properly installed by opening a terminal/shell/command prompt and typing: `quarto --version` and pressing enter. This should result in a version number being shown, most likely `1.2.475`.
+Install the latest version of Rstudio, which includes Quarto 1.2: - <https://posit.co/download/rstudio-desktop/>
 
 > **Note:** If you have an older version of R (not Rstudio) and need to upgrade, you may find that the easiest way is to uninstall R and reinstall >everything including packages from scratch. Unfortunately, it is not sufficient to use the regular uninstall functions, but you will find instructions on >removal here: https://www.delftstack.com/howto/r/uninstall-r-and-all-its-packages-on-windows/
 
@@ -85,11 +83,21 @@ First, you need to install Git. Download links: <https://git-scm.com/downloads>
 Then you are going to "clone" this code repository to a folder on your
 computer. There are two ways to go about this. Either you start up a terminal/shell/command prompt and navigate to where you would like to put the folder (a subfolder will automatically be created) and run the command `git clone https://github.com/pgmj/RstudioQuartoIntro.git`, or you can use a [graphical user interface for git](https://git-scm.com/downloads/guis). I have no experience with the GUI, so you will have to figure that out for yourself.
 
+If you are new to navigating a file system with a terminal/shell/command prompt, here are some links that I hope are useful:
+
+- MacOS: 
+  - <https://www.macworld.com/article/221277/command-line-navigating-files-folders-mac-terminal.html>
+  - <https://wiki.communitydata.science/MacOS_terminal_navigation>
+- Windows: 
+  - <https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/>
+
 ### Credits
 
-The dataset used:
+The datasets used:
 Mindfulness-integrated cognitive behaviour therapy (MiCBT) randomised controlled trial dataset.xlsx. (2020). [Data set]. Monash University. https://doi.org/10.26180/13240304
 
+And for questionnaire item data: https://pgmj.github.io/PreventOSA/
+With the data file available here: https://github.com/pgmj/PreventOSA/tree/main/data
 
 ## Additional materials for the curious
 

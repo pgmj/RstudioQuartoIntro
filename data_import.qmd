@@ -684,3 +684,11 @@ df2.recoded %>%
   geom_text(aes(label = n), colour = "orange") +
   theme_ki()
 ```
+
+
+## Exercise?
+
+Plot/table of age+gender for df2's spss file. Start with:
+```
+df3 <- read.spss("data/2023-04-26 Prevent OSA-enkat.sav", to.data.frame = T)
+```
