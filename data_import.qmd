@@ -537,9 +537,12 @@ glimpse(df.long)
 We'll write `df.long` to file for use in analysis (soon).
 
 ```{r}
-write.csv(df.long,"data/dataLong.csv")
+write_csv(df.long,"data/dataLong.csv")
 ```
 
+::: {.callout-tip}
+If you have a large dataset, I highly recommend using `library(arrow)` and the function `write_parquet()`, since it is incredibly fast and produces a small file. As an example, a 450mb SPSS datafile became 8mb when saved in .parquet format.
+:::
 
 ## Bonus - dealing with questionnaire data
 

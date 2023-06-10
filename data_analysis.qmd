@@ -52,13 +52,6 @@ editor_options:
 
 ### Setting up
 
-Read the data that we prepared previously.
-
-```{r}
-df.long <- read.csv("data/dataLong.csv")
-```
-
-
 Let's load packages/libraries.
 
 ```{r}
@@ -95,6 +88,12 @@ library(formattable)
 library(ggrepel)
 library(ggrain)
 library(sjPlot)
+```
+
+Read the data that we prepared previously.
+
+```{r}
+df.long <- read_csv("data/dataLong.csv")
 ```
 
 Define a ggplot theme `theme_ki()`, a standard table function, `kbl_ki()`, and a color palette based on KI's design guide, `ki_color_palette`.
@@ -497,4 +496,68 @@ This package is really great and has nice documentation:
 This series of blog posts on GLM's and causal inference is awesome:
 
 <https://solomonkurz.netlify.app/blog/2023-04-12-boost-your-power-with-baseline-covariates/>
+
+## Baseline covariates
+
+We can create a similar example to the blog post linked above. It makes a comparison of post-measurements between intervention and control groups, and adds pre-measurement as a covariate. We can use the last time point in our data
+
+First some data wrangling to get our pre/post measurement into wide format.
+
+```{r}
+#| code-fold: true
+df.bc <- df.long %>% 
+  mutate(time = as.integer(time)) %>% 
+  filter(time %in% c(0,3), 
+         measure == "DEP") %>%
+  pivot_wider(names_from = c("measure","time"),
+              values_from = "value")
+```
+
+We'll add a mean centered pre-measurement variable, just like in Kurz' blog post, and test both in our models.
+
+```{r}
+#| code-fold: true
+
+df.bc <- df.bc %>% 
+  mutate(pre_centered = DEP_0 - mean(DEP_0, na.rm = T))
+```
+
+### Model spec
+
+Then we can specify our models.
+
+```{r}
+#| code-fold: true
+
+bc1 <- lm(data = df.bc,
+          DEP_3 ~ Group)
+
+bc2 <- lm(data = df.bc,
+          DEP_3 ~ Group + DEP_0)
+
+bc3 <- lm(data = df.bc,
+          DEP_3 ~ Group + pre_centered)
+
+```
+
+### Check assumptions
+
+```{r}
+#| code-fold: true
+
+check_model(bc3)
+```
+
+### Output
+
+```{r}
+#| code-fold: true
+
+tab_model(bc1,bc2,bc3,
+          show.se = TRUE)
+```
+
+We can see that the standard error does indeed shrink, and the mean centered pre-measurement produces a correct intercept value. Nice!
+
+
 

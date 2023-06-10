@@ -83,6 +83,14 @@ I hope that you will be fairly comfortable with:
 -   descriptive analysis & visualization
 -   modeling & visualization
 
+### Overview of files
+
+- Our content: `start.qmd` (this file), `data_import.qmd`, and `data_analysis.qmd`
+  - these have been rendered to HTML in `/docs` folder (including all output and code)
+- Structure:
+  1. walkthrough of this presentation in parallel of looking at Rstudio & code
+  2. work through the `data_*` files together, exercises are interspersed in the files
+
 ## Keyboard shortcuts
 
 You will benefit greatly from doing things cleverly and establishing good habits from the start
@@ -105,7 +113,7 @@ I have prepared a handout containing the most frequently used shortcuts
 ### Good things
 
 ::: incremental
-- Creating step-by-step templates for data analysis 
+- Creating step-by-step templates for data analysis workflow
   - quality assurance!
 -   Traceability
     -   Transparency in decision making during analysis
@@ -143,7 +151,9 @@ I have prepared a handout containing the most frequently used shortcuts
 - `ctrl+alt/option+i` creates a new code chunk
 - `#` creates a heading, `##` makes a level 2 heading
 -  the Quarto website is super helpful!
- - <https://quarto.org/docs/authoring/markdown-basics.html>
+  - <https://quarto.org/docs/authoring/markdown-basics.html>
+  - use your favorite search engine or the site search
+
 
 ## Basics about R
 
@@ -208,7 +218,7 @@ df <- read_excel("path/to/excelfile.xls", sheet = 1)
 df2 <- read.spss("path/to/spssfile.sav", to.data.frame = TRUE)
 ```
 
-### Keyboard shortcuts {.smaller}
+### Keyboard shortcuts (in Swedish) {.smaller}
 
 -   **TAB** TAB-tangenten (ovanför CAPS LOCK) har många funktioner, dels kan den fylla i objekt- eller funktionsnamn när du skriver kod, men även i sökvägar när du ska läsa en fil. "TAB-completion"
 -   **CTRL+enter**

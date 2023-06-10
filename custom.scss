@@ -14,3 +14,14 @@ $presentation-h2-font-size: 1.9em;
 $presentation-h3-font-size: 1.9em;
 
 /*-- scss:rules --*/
+
+.reveal {
+  .slides {
+    .slide {
+      img+p.caption {
+        font-size: 0.5em;
+        text-align: center;
+      }
+    }
+  }
+}
