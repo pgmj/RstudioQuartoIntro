@@ -46,9 +46,10 @@ editor_options:
 ## Overview of this file
 
 -   Visualizing distributions
--   Running models
+-   Specifying models
 -   Checking assumptions
--   Effects(?)
+-   Tables and figures of model output
+-   Specifying more models
 
 ### Setting up
 
@@ -408,7 +409,7 @@ check_model(m1)
 ```{r}
 #| label: tbl-model1
 #| tbl-cap: 'Linear Mixed Model 1 summary statistics'
-tab_model(m1)
+tab_model(m1, show.se = TRUE)
 ```
 See <https://cran.r-project.org/web/packages/sjPlot/vignettes/tab_model_estimates.html> for more details on generating tables with `sjPlot` functions. One drawback with this package is that it only generates HTML-tables, which don't work well with PDF and Word output formats.
 
@@ -541,9 +542,12 @@ bc3 <- lm(data = df.bc,
 ```
 
 ### Check assumptions
+::: column-page-left
 
 ```{r}
 #| code-fold: true
+#| fig-height: 9
+#| fig-width: 10
 
 check_model(bc3)
 ```
@@ -556,6 +560,7 @@ check_model(bc3)
 tab_model(bc1,bc2,bc3,
           show.se = TRUE)
 ```
+:::
 
 We can see that the standard error does indeed shrink, and the mean centered pre-measurement produces a correct intercept value. Nice!
 
