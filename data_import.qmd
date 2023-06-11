@@ -196,6 +196,8 @@ df <- df %>%
 The dataset does not include any demographics. Just for fun, we'll add randomly assigned age and gender variables. `mutate()` helps us create or modify variables.
 
 ```{r}
+set.seed(1234)
+
 df <- df %>% 
   mutate(age = rnorm(nrow(df), 
                      mean = 44, 
