@@ -1,5 +1,7 @@
 # Introduction to reproducible data analysis with R and Quarto
 
+The materials made available here are not intended as a standalone educational product. It's intended use scenario is with a course leader walking through the materials, adding information to what is on the slides and the data import/analysis files.
+
 ## Preparations
 
 Install R (you need version 4.1 or later) for your platform: 
