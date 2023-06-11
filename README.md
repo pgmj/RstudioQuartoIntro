@@ -103,6 +103,8 @@ Mindfulness-integrated cognitive behaviour therapy (MiCBT) randomised controlled
 And for questionnaire item data: https://pgmj.github.io/PreventOSA/
 With the data file available here: https://github.com/pgmj/PreventOSA/tree/main/data
 
+Thanks to [Emil Hvitfeldt](https://github.com/EmilHvitfeldt) for blog posts on revealjs design and the use of iframes.
+
 ## Additional materials for the curious
 
 It is not expected that you look at these before we start the course.
