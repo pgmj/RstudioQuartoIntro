@@ -107,11 +107,11 @@ Thanks to [Emil Hvitfeldt](https://github.com/EmilHvitfeldt) for blog posts on r
 
 ## Additional materials for the curious
 
-It is not expected that you look at these before we start the course.
+It is not expected that you look at these before starting the course.
 
 [Hadley Wickham's book "R for data science"](https://r4ds.hadley.nz/) is a great place to learn about R, no matter which level of prior knowledge you possess.
 
-For a great collection of helpful materials on *"research design, causal inference, and econometric tools to measure the effects of social programs"*, see <https://evalsp23.classes.andrewheiss.com/>
+For a nice collection of helpful materials on *"research design, causal inference, and econometric tools to measure the effects of social programs"*, see <https://evalsp23.classes.andrewheiss.com/>
 
 ## Author
 
