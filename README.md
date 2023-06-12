@@ -104,7 +104,13 @@ If you are new to navigating a file system with a terminal/shell/command prompt,
 - Windows: 
   - <https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/>
 
-The course files are the [Quarto](https://quarto.org) `*.qmd` files in the root directory of the repository. Rendered revealjs/HTML outputs from the .qmd files are available in the `/docs` folder and hosted with GitHub Pages. You can reach them directly at <https://pgmj.github.io/RstudioQuartoIntro/start.html>. Replace `start` with `data_import` or `data_analysis` to view the other files.
+The course files are the [Quarto](https://quarto.org) `*.qmd` files in the root directory of the repository. Rendered revealjs/HTML outputs from the .qmd files are available in the `/docs` folder and hosted with GitHub Pages. You can reach them directly at 
+
+- <https://pgmj.github.io/RstudioQuartoIntro/start.html>
+- <https://pgmj.github.io/RstudioQuartoIntro/data_import.html>
+- <https://pgmj.github.io/RstudioQuartoIntro/data_analysis.html>
+
+All code is also available in the HTML-files. You should be able to re-create the HTML files from the .qmd files.
 
 ### Credits
 
