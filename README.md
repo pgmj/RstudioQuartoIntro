@@ -1,6 +1,8 @@
 # Introduction to reproducible data analysis with R and Quarto
 
-The materials made available here are not intended as a standalone educational product. The intended use scenario is with a course leader walking through the materials, adding information to what is on the slides and the data import/analysis files, and of course interacting with cours participants.
+The materials made available here are not intended as a standalone educational product. The intended use scenario is with a course leader walking through the materials, adding information to what is on the slides and the data import/analysis files, and interacting with course participants.
+
+With that said, you can browse the content and see if you find it useful. See the section [Structure](https://github.com/pgmj/RstudioQuartoIntro#structure) below.
 
 ## Preparations
 
