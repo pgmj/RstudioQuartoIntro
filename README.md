@@ -83,6 +83,7 @@ library(sjPlot)
 There is a zip file with all the course files:
 
 - <https://github.com/pgmj/RstudioQuartoIntro/blob/main/RstudioQuartoIntro.zip>
+- Click the downward arrow button to the far right to download the file
 
 Make sure that you extract the zip file into a folder.
 
