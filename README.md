@@ -80,7 +80,17 @@ library(sjPlot)
 
 ### Getting all the course files
 
-First, you need to install Git. Download links: <https://git-scm.com/downloads>
+There is a zip file with all the course files:
+
+- <https://github.com/pgmj/RstudioQuartoIntro/blob/main/RstudioQuartoIntro.zip>
+
+Make sure that you extract the zip file into a folder.
+
+> **Note:** Windows users beware of double-clicking the file since this may open the zip file in a way that looks like it already is a folder. Either right-click the file and select "Extract to..." or make sure to click the Extract button if you did double-click the file.
+
+#### Using git
+
+If you want to, you can to install Git and clone the repository instead. Download links: <https://git-scm.com/downloads>
 
 Then you are going to "clone" this code repository to a folder on your
 computer. There are two ways to go about this. Either you start up a terminal/shell/command prompt and navigate to where you would like to put the folder (a subfolder will automatically be created) and run the command `git clone https://github.com/pgmj/RstudioQuartoIntro.git`, or you can use a [graphical user interface for git](https://git-scm.com/downloads/guis). I have no experience with the GUI, so you will have to figure that out for yourself.
