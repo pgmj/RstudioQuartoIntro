@@ -210,9 +210,16 @@ df <- df %>%
 We made a gender/sex variable that is numeric, since this is often the case. You may want to turn it into a factor instead, with labels.
 
 ```{r}
+# with base R
 df$sex <- factor(df$sex, 
                  levels = c(1,2),
                  labels = c("Female","Male"))
+
+# same thing, with tidy syntax/tools
+df <- df %>% 
+  mutate(sex = factor(sex, 
+                 levels = c(1,2),
+                 labels = c("Female","Male")))
 ```
 
 

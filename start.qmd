@@ -137,6 +137,13 @@ I have prepared a handout containing the most frequently used shortcuts
 -   code editor is helpful and sometimes confusing
 :::
 
+### Are you using the course project?
+
+- Check the upper right corner in Rstudio
+  - It should say `RstudioQuartoIntro`
+
+If it doesn't, you need to navigate your file explorer/finder to where you saved the course files, and open the file `RstudioQuartoIntro.Rproj`
+
 ## Quarto basics
 
 - YAML
