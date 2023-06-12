@@ -104,7 +104,10 @@ If you are new to navigating a file system with a terminal/shell/command prompt,
 - Windows: 
   - <https://www.howtogeek.com/659411/how-to-change-directories-in-command-prompt-on-windows-10/>
 
-The course files are the [Quarto](https://quarto.org) `*.qmd` files in the root directory of the repository. Rendered revealjs/HTML outputs from the .qmd files are available in the `/docs` folder and hosted with GitHub Pages. You can reach them directly at 
+
+## Structure
+
+The core course files are the [Quarto](https://quarto.org) `*.qmd` files in the root directory of the repository. Rendered revealjs/HTML outputs from the .qmd files are available in the `/docs` folder and hosted with GitHub Pages. You can reach them directly at 
 
 - <https://pgmj.github.io/RstudioQuartoIntro/start.html>
 - <https://pgmj.github.io/RstudioQuartoIntro/data_import.html>
@@ -112,7 +115,7 @@ The course files are the [Quarto](https://quarto.org) `*.qmd` files in the root 
 
 All code is also available in the HTML-files. You should be able to re-create the HTML files from the .qmd files.
 
-### Credits
+## Credits
 
 The datasets used:
 Mindfulness-integrated cognitive behaviour therapy (MiCBT) randomised controlled trial dataset.xlsx. (2020). [Data set]. Monash University. https://doi.org/10.26180/13240304
