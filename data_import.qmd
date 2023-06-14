@@ -372,7 +372,8 @@ df %>%
 ::: {.callout-tip}
 #### Practice 
 
-- Plot age grouped by gender (bonus: facet_wrap by Group)
+- Plot age grouped by sex 
+  - bonus task: try facet_grid() to plot age by sex and Group
 :::
 
 ## Variable names

@@ -1,0 +1,122 @@
+---
+title: "Data import & descriptives"
+title-block-banner: "#870052"
+title-block-banner-color: "#FFFFFF"
+author: 
+  name: Magnus Johansson
+  affiliation: RISE Research Institutes of Sweden
+  affiliation-url: https://ri.se/shic
+  orcid: 0000-0003-1669-592X
+date: 2023-06-12
+date-format: YYYY-MM-DD
+format: 
+  html:
+    
+    toc: true
+    embed-resources: true
+    standalone: true
+    mainfont: 'Arial'
+    code-overflow: wrap
+    code-fold: true
+    code-link: true
+    number-sections: true
+    fig-dpi: 96
+    layout-align: left
+    linestretch: 1.6
+    theme: materia
+  pdf:
+    papersize: a4
+    documentclass: article #article, report or book
+    #classoption: [twocolumn, portrait]
+  docx:
+    
+    toc: false
+    number-sections: false
+    highlight-style: github
+always_allow_html: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+css: style.css
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setting up
+
+```{r}
+#| code-fold: show
+# these are mostly for data management/wrangling and visualization
+library(tidyverse) # for most things
+library(foreign) # for reading SPSS files
+library(readxl) # read MS Excel files
+library(showtext) # get fonts
+library(glue) # simplifies mixing text and code in figures and tables
+library(arrow) # support for efficient file formats
+library(grateful) # create table+references for packages used in a project
+library(styler) # only a one-time installation (it is an Rstudio plugin)
+library(car) # for car::recode only
+library(skimr) # data skimming
+library(lubridate) # for handling dates in data
+library(janitor) # for many things in data cleaning
+
+# these are mostly for data analysis and visualization
+library(gtsummary)
+library(scales)
+library(visdat)
+library(psych)
+library(lme4)
+library(nlme)
+library(broom.mixed)
+library(patchwork)
+library(easystats)
+library(mice)
+library(modelsummary)
+library(ggrain)
+library(ggdist)
+library(kableExtra)
+library(formattable)
+library(ggrepel)
+library(GGally)
+
+source("ki.R") # this reads an external file and loads whatever is in it
+
+# define preferred functions
+select <- dplyr::select
+count <- dplyr::count
+recode <- car::recode
+rename <- dplyr::rename
+filter <- dplyr::filter
+clean_names <- janitor::clean_names
+```
+
+## Importing data
+
+```{r}
+
+```
+
+### Inspecting data
+
+try glimpse() and skim(), maybe the latter with group_by()?
+
+```{r}
+
+```
+
+### Renaming variables?
+
+Also remember that clean_names() can be useful.
+
+```{r}
+
+```
+
+## Demographics
+
+Make a table or two, and a figure or two, based on demographic information.
+
+
+Then render the whole document, try all three formats. Since we specified options for html, pdf, and docx in the YAML code in the beginning of this file, the Render button at the top of this window has a small triangle next to it that allows you to choose output format.
