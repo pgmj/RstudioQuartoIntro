@@ -134,9 +134,13 @@ It is not expected that you look at these before starting the course.
 
 - [Hadley Wickham's book "R for data science"](https://r4ds.hadley.nz/) is a great place to learn about R, no matter which level of prior knowledge you possess.
 
+- A super useful free online book on research data management and organization by Crystal Lewis: <https://datamgmtinedresearch.com/>
+
+- DeclareDesign is a book and an R package with tools to plan, implement, analyze, and communicate about empirical research: <https://declaredesign.org/>
+
 - For a nice collection of helpful materials on *"research design, causal inference, and econometric tools to measure the effects of social programs"*, see Andrew Heiss' materials (and also check out his blog):  <https://evalsp23.classes.andrewheiss.com/>
 
-- A super useful free online book on research data management and organization by Crystal Lewis: <https://datamgmtinedresearch.com/>
+- The documentation for the amazing `marginaleffects` package includes helpful "case studies" to illustrate the use of the package in a lot of different types of analysis (click on "Case studies" in the left hand menu on the website): <https://marginaleffects.com/>
 
 ## Author
 
