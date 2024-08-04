@@ -8,13 +8,13 @@ With that said, you can browse the content and see if you find it useful. See th
 
 Install R (you need version 4.1 or later) for your platform: 
 
-- Windows: <https://ftp.acc.umu.se/mirror/CRAN/bin/windows/base/R-4.3.0-win.exe> 
-- Mac: <https://ftp.acc.umu.se/mirror/CRAN/bin/macosx/> 
-- Others, see: <https://ftp.acc.umu.se/mirror/CRAN/>
+- <https://cran.r-project.org/>
 
-Install the latest version of Rstudio, which includes Quarto 1.2: - <https://posit.co/download/rstudio-desktop/>
+Install the latest version of Rstudio, which includes Quarto: 
 
-> **Note:** If you have an older version of R (not Rstudio) and need to upgrade, you may find that the easiest way is to uninstall R and reinstall everything including packages from scratch. Unfortunately, it is not sufficient to use the regular uninstall functions, but you will find instructions on removal here: https://www.delftstack.com/howto/r/uninstall-r-and-all-its-packages-on-windows/
+- <https://posit.co/download/rstudio-desktop/>
+
+> **Note:** If you have an older version of R (not Rstudio) and need to upgrade, I find that the easiest way is to uninstall R and reinstall everything including packages from scratch. Unfortunately, it is not sufficient to use the regular uninstall functions, but you will find instructions on removal here: https://www.delftstack.com/howto/r/uninstall-r-and-all-its-packages-on-windows/
 
 
 ### Rstudio settings
@@ -36,7 +36,7 @@ install.packages(c("ggrepel","formattable","kableExtra","ggdist","ggrain",
                    "lubridate","skimr","car","styler","grateful","arrow","glue",
                    "showtext","readxl","foreign","tidyverse","visdat",
                    "gtsummary","scales","marginaleffects","ggeffects",
-                   "sjPlot"))
+                   "sjPlot","haven"))
 ```
 
 And for convenience here are the packages in another format, with some brief explanations.
@@ -44,7 +44,8 @@ And for convenience here are the packages in another format, with some brief exp
 ```
 # these are mostly for data management/wrangling and visualization
 library(tidyverse) # for most things
-library(foreign) # for reading SPSS files
+library(haven) # for reading SPSS files and other formats
+library(foreign) # also for reading SPSS files and other formats
 library(readxl) # read MS Excel files
 library(showtext) # get fonts
 library(glue) # simplifies mixing text and code in figures and tables
@@ -61,20 +62,20 @@ library(gtsummary)
 library(scales)
 library(visdat)
 library(psych)
-library(lme4)
-library(nlme)
-library(broom.mixed)
+library(lme4) # linear mixed models
+library(nlme) # non-linear models
+library(broom.mixed) # get dataframe-formatted summaries of statistical models
 library(ggplot2)
 library(patchwork)
-library(easystats)
-library(GGally)
-library(mice)
-library(modelsummary)
-library(ggrain)
-library(ggdist)
-library(kableExtra)
-library(formattable)
-library(ggrepel)
+library(easystats) # lots of convenient statistical functions, see <https://easystats.github.io/>
+library(GGally) # simple and nice correlation matrix
+library(mice) # impute data
+library(modelsummary) # easy summary of statistical models
+library(ggrain) # raincloud plots
+library(ggdist) # create plots of different distributions
+library(kableExtra) # tables in different formats 
+library(formattable) # tables in HTML format
+library(ggrepel) # automatic flexible positioning of text to avoid overlap
 library(marginaleffects)
 library(ggeffects)
 library(sjPlot)
@@ -131,16 +132,19 @@ Thanks to [Emil Hvitfeldt](https://github.com/EmilHvitfeldt) for blog posts on r
 
 It is not expected that you look at these before starting the course.
 
-[Hadley Wickham's book "R for data science"](https://r4ds.hadley.nz/) is a great place to learn about R, no matter which level of prior knowledge you possess.
+- [Hadley Wickham's book "R for data science"](https://r4ds.hadley.nz/) is a great place to learn about R, no matter which level of prior knowledge you possess.
 
-For a nice collection of helpful materials on *"research design, causal inference, and econometric tools to measure the effects of social programs"*, see <https://evalsp23.classes.andrewheiss.com/>
+- For a nice collection of helpful materials on *"research design, causal inference, and econometric tools to measure the effects of social programs"*, see Andrew Heiss' materials (and also check out his blog):  <https://evalsp23.classes.andrewheiss.com/>
+
+- A super useful free online book on research data management and organization by Crystal Lewis: <https://datamgmtinedresearch.com/>
 
 ## Author
 
 [Magnus Johansson](https://www.ri.se/en/person/magnus-p-johansson) is a licensed psychologist with a PhD in behavior analysis from [Oslo Metropolitan University](https://www.oslomet.no/en/study/hv/behaviour-analysis-phd). He works as a research scientist at [RISE Research Institutes of Sweden](https://ri.se/en), Department of Measurement Science and Technology, and is an affiliated researcher at [Karolinska Institutet](https://medarbetare.ki.se/orgid/52082137). 
-- Twitter: [\@pgmjoh](https://twitter.com/pgmjoh) 
 - ORCID: [0000-0003-1669-592X](https://orcid.org/0000-0003-1669-592X) 
 - Mastodon: [\@pgmj\@scicomm.xyz](https://scicomm.xyz/@pgmj)
+- Bluesky: [\@pgmj](https://bsky.app/profile/pgmj.bsky.social)
+- Twitter: [\@pgmjoh](https://twitter.com/pgmjoh) 
 
 ## License
 
