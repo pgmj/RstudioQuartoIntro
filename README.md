@@ -146,7 +146,8 @@ It is not expected that you look at these before starting the course.
 
 ## Author
 
-[Magnus Johansson](https://www.ri.se/en/person/magnus-p-johansson) is a licensed psychologist with a PhD in behavior analysis from [Oslo Metropolitan University](https://www.oslomet.no/en/study/hv/behaviour-analysis-phd). He works as a research scientist at [RISE Research Institutes of Sweden](https://ri.se/en), Department of Measurement Science and Technology, and is an affiliated researcher at [Karolinska Institutet](https://medarbetare.ki.se/orgid/52082137). 
+[Magnus Johansson](https://www.ri.se/en/person/magnus-p-johansson) is a licensed psychologist with a PhD in behavior analysis from [Oslo Metropolitan University](https://www.oslomet.no/en/study/hv/behaviour-analysis-phd). He works as a research scientist at [RISE Research Institutes of Sweden](https://ri.se/en), Department of System Transition, and is an affiliated researcher at [Karolinska Institutet](https://medarbetare.ki.se/orgid/52082137). 
+
 - ORCID: [0000-0003-1669-592X](https://orcid.org/0000-0003-1669-592X) 
 - Mastodon: [\@pgmj\@scicomm.xyz](https://scicomm.xyz/@pgmj)
 - Bluesky: [\@pgmj](https://bsky.app/profile/pgmj.bsky.social)
