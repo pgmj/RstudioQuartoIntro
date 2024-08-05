@@ -132,6 +132,8 @@ Thanks to [Emil Hvitfeldt](https://github.com/EmilHvitfeldt) for blog posts on r
 
 It is not expected that you look at these before starting the course.
 
+- [Introduction to R with Tidyverse](https://introduction-r-tidyverse.netlify.app/) by Sophie Lee.
+
 - [Hadley Wickham's book "R for data science"](https://r4ds.hadley.nz/) is a great place to learn about R, no matter which level of prior knowledge you possess.
 
 - A super useful free online book on research data management and organization by Crystal Lewis: <https://datamgmtinedresearch.com/>
